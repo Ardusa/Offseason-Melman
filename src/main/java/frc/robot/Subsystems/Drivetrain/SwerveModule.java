@@ -1,8 +1,11 @@
 package frc.robot.Subsystems.Drivetrain;
 
+import java.util.Collection;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -24,6 +27,8 @@ public class SwerveModule {
     private LoggyWPI_TalonFX mAngleMotor;
     private LoggyWPI_TalonFX mDriveMotor;
     private CANCoder angleEncoder;
+
+    Collection<TalonFX> talons;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
@@ -130,5 +135,11 @@ public class SwerveModule {
 
     public double TalonAngleTemperature() {
         return mAngleMotor.getTemperature();
+    }
+
+    public Collection<TalonFX> getTalons() {
+        talons.add(mDriveMotor);
+        talons.add(mAngleMotor);
+        return talons;
     }
 }

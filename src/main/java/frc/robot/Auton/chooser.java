@@ -5,6 +5,7 @@ import java.nio.file.Path;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -16,9 +17,11 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain.Swerve;
 
 public class chooser extends CommandBase {
-    private String selectedAuton;
+    private String selectedAuton = "";
     private final String baseFolder = "autonPaths/";
     private Path AutonPath;
+    public Trajectory trajectory;
+    private String nullPath = "autonPaths/null";
     private ProfiledPIDController thetaController = 
         new ProfiledPIDController(
         Constants.AutoConstants.kPThetaController, 0, 0,
@@ -29,15 +32,27 @@ public class chooser extends CommandBase {
 
     /** Add .json to files */
     public chooser(String selected) {
-        this.selectedAuton = baseFolder + selected;
-        AutonPath = Filesystem.getDeployDirectory().toPath().resolve(selectedAuton);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
+        this.selectedAuton = baseFolder + selected;
+        if (!selected.equals("null")) {
+            AutonPath = Filesystem.getDeployDirectory().toPath().resolve(selectedAuton);
+            try {
+                trajectory = TrajectoryUtil.fromPathweaverJson(AutonPath);
+            } catch (IOException ex) {
+                DriverStation.reportError("Auton Path not valid", ex.getStackTrace());
+            }
+        }
     }
 
     public Command getTrajectory() {
-        try {
+        // return new defaultSwerve(() -> 1, () -> 1, () -> 0, () -> false, () -> false).repeatedly().withTimeout(5);
+
+        if (selectedAuton.equals(nullPath)) {
+            return Commands.print("Null Path");
+        } else {
             return new SwerveControllerCommand(
-                TrajectoryUtil.fromPathweaverJson(AutonPath),
+                // TrajectoryUtil.fromPathweaverJson(AutonPath),
+                trajectory,
                 mSwerve::getPose,
                 Constants.Swerve.swerveKinematics,
                 new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -46,9 +61,6 @@ public class chooser extends CommandBase {
                 mSwerve::setModuleStates,
                 mSwerve
             );
-        } catch (IOException ex) {
-            DriverStation.reportError("Auton Path not valid", ex.getStackTrace());
-            return Commands.print("Auton Path not valid: " + AutonPath.toString());
         }
     }
 }

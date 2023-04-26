@@ -4,23 +4,30 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Auton.chooser;
+import frc.robot.Commands.Teleop.defaultSwerve;
 import frc.robot.Custom.CTREConfigs;
 
 public class Robot extends TimedRobot {
+  public chooser chooser;
   private Command m_autonomousCommand;
   public SendableChooser<String> autonChooser = new SendableChooser<String>();
-  private RobotContainer m_robotContainer;
+  // private RobotContainer m_robotContainer;
   public static CTREConfigs ctreConfigs;
 
   @Override
   public void robotInit() {
     ctreConfigs = new CTREConfigs();
-    m_robotContainer = new RobotContainer();
+    new RobotContainer();
+    autonChooser.setDefaultOption("Nothing", "null");
+    autonChooser.addOption("Path 1", "Path1.json");
+    SmartDashboard.putData("Autonomous Command", autonChooser);
   }
 
   @Override
@@ -39,7 +46,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = new chooser(autonChooser.getSelected()).getTrajectory();
+    // m_autonomousCommand = Commands.print(autonChooser.getSelected());
+    // m_autonomousCommand.schedule();
+    chooser = new chooser(autonChooser.getSelected());
+    m_autonomousCommand = chooser.getTrajectory();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -47,7 +57,11 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    System.out.println(m_autonomousCommand.getName());
+    System.out.println(chooser.trajectory.getTotalTimeSeconds());
+    // System.out.println("Module 0 Speed: " + Swerve.getInstance().mSwerveMods[0].getState().speedMetersPerSecond);
+  }
 
   @Override
   public void autonomousExit() {}
@@ -71,8 +85,15 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    new defaultSwerve(() -> 0.5, () -> 0, () -> 0, () -> false, () -> false).repeatedly();
+  }
 
   @Override
   public void testExit() {}
+
+  @Override
+  public void simulationInit() {
+    DriverStation.silenceJoystickConnectionWarning(true);
+  }
 }
