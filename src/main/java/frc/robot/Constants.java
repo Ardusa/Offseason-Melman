@@ -30,17 +30,18 @@ public final class Constants {
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = 0.501;
-        public static final double wheelBase = 0.615;
+        public static final double trackWidth = 0.501; // 19.72 inches
+        public static final double wheelBase = 0.615; // 24.21 Inches
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */
          public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+            new Translation2d(wheelBase / 2.0, trackWidth / 2.0),   // Front Left
+            new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),  // Front Right
+            new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),  // Back Left
+            new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0)  // Back Right
+        );
 
         /* Module Gear Ratios */
         public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -88,9 +89,10 @@ public final class Constants {
         public static final double driveKA = (0.27 / 12);
 
         /* Swerve Profiling Values */
+
         /** Meters per Second */
         public static final double maxSpeed = 4.5;
-        public static double testSpeed = 0.2;
+        public static final double BoBmultiplier = 0.3;
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0;
 
@@ -101,7 +103,9 @@ public final class Constants {
         public static final double targetOffset = 0;
 
         public static final int Pigeon2_ID = 3;
+
         /* Module Specific Constants */
+
         /* Front Right Module - Module 0 */
         public static final class Mod0 {
             public static final int driveMotorID = 11;
@@ -152,14 +156,16 @@ public final class Constants {
           // TODO: ADJUST THESE STANDARD DEVIATIONS
           public static final Matrix<N3, N1> STATE_STANDARD_DEVS = new Matrix<>(Nat.N3(), Nat.N1());
           public static final Matrix<N3, N1> VISION_STANDARD_DEVS = new Matrix<>(Nat.N3(), Nat.N1());
+          public static final double FaithInTheState = 0.2;
+          public static final double PrecisionOfMyVision = 30;
           static {
-            STATE_STANDARD_DEVS.set(0, 0, 0.2); // State x position
-            STATE_STANDARD_DEVS.set(1, 0, 0.2); // State y position
-            STATE_STANDARD_DEVS.set(2, 0, 0.2); // State rotation
+            STATE_STANDARD_DEVS.set(0, 0, FaithInTheState); // State x position
+            STATE_STANDARD_DEVS.set(1, 0, FaithInTheState); // State y position
+            STATE_STANDARD_DEVS.set(2, 0, FaithInTheState); // State rotation
 
-            VISION_STANDARD_DEVS.set(0, 0, 30); // Vision x position
-            VISION_STANDARD_DEVS.set(1, 0, 30); // Vision y position
-            VISION_STANDARD_DEVS.set(2, 0, 30); // Vision rotation
+            VISION_STANDARD_DEVS.set(0, 0, PrecisionOfMyVision); // Vision x position
+            VISION_STANDARD_DEVS.set(1, 0, PrecisionOfMyVision); // Vision y position
+            VISION_STANDARD_DEVS.set(2, 0, PrecisionOfMyVision); // Vision rotation
           }
 
           public static final double MIN_TIME_BETWEEN_LL_UPDATES_MS = 20e-3;

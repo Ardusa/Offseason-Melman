@@ -27,7 +27,7 @@ public class RobotContainer {
         xDrive::getRightBumper
     ));
 
-    new JoystickButton(xDrive, XboxController.Button.kBack.value).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve));
-    new JoystickButton(xDrive, XboxController.Button.kB.value).onTrue(new InstantCommand(mSwerve::lockPosition, mSwerve));
+    new JoystickButton(xDrive, XboxController.Button.kBack.value).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
+    new JoystickButton(xDrive, XboxController.Button.kB.value).onTrue(new InstantCommand(mSwerve::lockPosition, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
   }
 }

@@ -20,7 +20,7 @@ public class defaultSwerve extends CommandBase {
     private BooleanSupplier BoB; // Baby on Board
 
     /**
-     * Default Swerve Code
+     * Default Swerve Code, will also set gyro to 0 relative to field
      * @param translationSup (DoubleSupplier) Forward & Backwards
      * @param strafeSup (DoubleSupplier) Left & Right
      * @param rotationSup (DoubleSupplier) Turning angle
@@ -29,6 +29,9 @@ public class defaultSwerve extends CommandBase {
      */
     public defaultSwerve(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier BoB) {
         addRequirements(mSwerve);
+
+        /* Set the param negative could be solution */
+        mSwerve.setGyro(mSwerve.getPose().getRotation().getDegrees());
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
@@ -45,9 +48,9 @@ public class defaultSwerve extends CommandBase {
         double rotationVal = Utils.customDeadzone(rotationSup.getAsDouble());
 
         if(BoB.getAsBoolean()) {
-            translationVal *= 0.2;
-            strafeVal *= 0.2;
-            rotationVal *= 0.2;
+            translationVal *= Constants.Swerve.BoBmultiplier;
+            strafeVal *= Constants.Swerve.BoBmultiplier;
+            rotationVal *= Constants.Swerve.BoBmultiplier;
         }
 
         /* Drive */

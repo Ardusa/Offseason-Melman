@@ -17,7 +17,7 @@ import frc.robot.Custom.CTREConfigs;
 public class Robot extends TimedRobot {
   public chooser chooser;
   private Command m_autonomousCommand;
-  public SendableChooser<String> autonChooser = new SendableChooser<String>();
+  public SendableChooser<String> autonChooser = new SendableChooser<>();
   // private RobotContainer m_robotContainer;
   public static CTREConfigs ctreConfigs;
 
@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
     new RobotContainer();
     autonChooser.setDefaultOption("Nothing", "null");
     autonChooser.addOption("Path 1", "Path1.json");
+    autonChooser.addOption("Coop No Bump", "CoopertitionNoBump.json");
     SmartDashboard.putData("Autonomous Command", autonChooser);
   }
 
@@ -59,7 +60,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     System.out.println(m_autonomousCommand.getName());
-    System.out.println(chooser.trajectory.getTotalTimeSeconds());
+    if (autonChooser.getSelected() != "null") {
+      System.out.println(chooser.trajectory.getTotalTimeSeconds());
+    }
     // System.out.println("Module 0 Speed: " + Swerve.getInstance().mSwerveMods[0].getState().speedMetersPerSecond);
   }
 
