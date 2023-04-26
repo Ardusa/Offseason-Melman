@@ -43,8 +43,8 @@ public class Swerve extends SubsystemBase {
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(1, Constants.Swerve.Mod0.constants),
-            new SwerveModule(0, Constants.Swerve.Mod1.constants),
+            new SwerveModule(0, Constants.Swerve.Mod0.constants),
+            new SwerveModule(1, Constants.Swerve.Mod1.constants),
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
@@ -172,8 +172,8 @@ public class Swerve extends SubsystemBase {
      */
     public void lockPosition() {
         SwerveModuleState[] lockStates = {
-            new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
             new SwerveModuleState(0, Rotation2d.fromDegrees(315)),
+            new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
             new SwerveModuleState(0, Rotation2d.fromDegrees(225)),
             new SwerveModuleState(0, Rotation2d.fromDegrees(135)),
         };

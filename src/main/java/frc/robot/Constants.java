@@ -15,7 +15,7 @@ import frc.robot.Custom.lib.util.COTSFalconSwerveConstants;
 import frc.robot.Custom.lib.util.SwerveModuleConstants;
 
 
-//Numbering system for drivetrain: 0 - front right, 1 - front left, 2 - back left, 3 - back right
+//Numbering system for drivetrain: 0 - front left, 1 - front right, 2 - back left, 3 - back right
 //0.42545 + 0.254/2
 
 public final class Constants {
@@ -106,22 +106,24 @@ public final class Constants {
 
         /* Module Specific Constants */
 
-        /* Front Right Module - Module 0 */
-        public static final class Mod0 {
-            public static final int driveMotorID = 11;
-            public static final int angleMotorID = 10;
-            public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
-            public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-        }
+        // TODO: Switched Mod Constants, redo Falcon IDs
 
-        /* Front Left Module - Module 1 */
-        public static final class Mod1 {
+        /* Front Left Module - Module 0 */
+        public static final class Mod0 {
             public static final int driveMotorID = 20;
             public static final int angleMotorID = 21;
             public static final int canCoderID = 22;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.40);
+            public static final SwerveModuleConstants constants = 
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+        }
+
+        /* Front Right Module - Module 1 */
+        public static final class Mod1 {   
+            public static final int driveMotorID = 11;
+            public static final int angleMotorID = 10;
+            public static final int canCoderID = 12;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
