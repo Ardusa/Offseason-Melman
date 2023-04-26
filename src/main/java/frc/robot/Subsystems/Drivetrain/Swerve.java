@@ -39,7 +39,7 @@ public class Swerve extends SubsystemBase {
     public Swerve() {
         mField = new Field2d();
         mGyro = new Pigeon2(Constants.Swerve.Pigeon2_ID);
-        SmartDashboard.putData("field", mField);
+        SmartDashboard.putData("Swerve/Field", mField);
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
@@ -195,9 +195,10 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
-        SmartDashboard.putString("CurrentPosition", getPose().getX() + " " + getPose().getY() + " " + getPose().getRotation().getDegrees() + " ");
-        SmartDashboard.putNumber("angle", getGyroAngle());
+        SmartDashboard.putData("Swerve", Swerve.getInstance());
+        SmartDashboard.putString("Swerve/CurrentPosition", getPose().getX() + " " + getPose().getY() + " " + getPose().getRotation().getDegrees() + " ");
+        SmartDashboard.putNumber("Swerve/Angle", getGyroAngle());
         mField.setRobotPose(getPose());
-        SmartDashboard.putNumber(getName(), getGyroAngle());
+        // SmartDashboard.putNumber(getName(), getGyroAngle());
     }
 }

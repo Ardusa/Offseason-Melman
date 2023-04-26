@@ -2,6 +2,7 @@ package frc.robot.Auton;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -27,6 +28,8 @@ public class chooser extends CommandBase {
         Constants.AutoConstants.kPThetaController, 0, 0,
         Constants.AutoConstants.kThetaControllerConstraints
     );
+
+    HashMap<String, Command> eventMap1 = new HashMap<>();
 
     private final Swerve mSwerve = Swerve.getInstance();
 
@@ -61,6 +64,8 @@ public class chooser extends CommandBase {
                 mSwerve::setModuleStates,
                 mSwerve
             );
+
+
         }
     }
 }
