@@ -11,12 +11,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Auton.chooser;
+import frc.robot.Auton.pathPlannerChooser;
+import frc.robot.Commands.Swerve.balance;
 import frc.robot.Custom.CTREConfigs;
 import frc.robot.Custom.LoggyThings.LoggyThingManager;
+import frc.robot.Subsystems.Drivetrain.Swerve;
 
 public class Robot extends TimedRobot {
     public chooser chooser;
+    public pathPlannerChooser pathPlanner;
     private Command m_autonomousCommand;
     public SendableChooser<String> autonChooser;
     public static CTREConfigs ctreConfigs;
@@ -25,13 +30,14 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         ctreConfigs = new CTREConfigs();
         new RobotContainer();
-        
+
         DriverStation.silenceJoystickConnectionWarning(true);
 
         autonChooser = new SendableChooser<>();
         autonChooser.setDefaultOption("Nothing", "null");
-        autonChooser.addOption("Path 1", "Path1.json");
-        autonChooser.addOption("Coop No Bump", "CoopertitionNoBump.json");
+        // autonChooser.addOption("Path 1", "Path1.json");
+        // autonChooser.addOption("Coop No Bump", "CoopertitionNoBump.json");
+        autonChooser.addOption("Place and Charge Path", "1pieceAndCharge");
         SmartDashboard.putData("Autonomous Command", autonChooser);
 
         CommandScheduler.getInstance().onCommandInitialize((Command c) -> {DataLogManager.log("INITIALIZED: " + c.getName());});
@@ -56,19 +62,22 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        chooser = new chooser(autonChooser.getSelected());
-        m_autonomousCommand = chooser.getTrajectory();
+        // chooser = new chooser(autonChooser.getSelected());
+        // m_autonomousCommand = chooser.generateTrajectory();
+
+        pathPlanner = new pathPlannerChooser(autonChooser.getSelected());
+        m_autonomousCommand = pathPlanner.generateTrajectory();
 
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
+
+        new Trigger(() -> pathPlanner.autonFinished).onTrue(new balance().repeatedly().until(() -> Math.abs(Swerve.getInstance().getPitchAngle()) <= 0.05));
     }
 
     @Override
     public void autonomousPeriodic() {
-        if (autonChooser.getSelected() != "null") {
-            System.out.println(chooser.trajectory.getTotalTimeSeconds());
-        }
+
     }
 
     @Override

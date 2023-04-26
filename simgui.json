@@ -22,6 +22,8 @@
       "/LiveWindow/Ungrouped/Talon FX [40]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [41]": "Motor Controller",
       "/SmartDashboard/Autonomous Command": "String Chooser",
+      "/SmartDashboard/Swerve": "Subsystem",
+      "/SmartDashboard/Swerve/Field": "Field2d",
       "/SmartDashboard/field": "Field2d"
     },
     "windows": {
