@@ -228,6 +228,17 @@ public final class Constants {
       }
   }
 
+  public static class softwareConstants {
+    public static final int PathPlannerLibPort = 5811;
+    public static final int AdvantageScopePort = 5900;
+
+    public static final int RightLimeLightPort = 5800;
+    public static final int LeftLimeLightPort = 5600;
+    public static final int CenterLimeLightPort = 5000;
+
+    
+  }
+
   public static class Lights {
     public static final int blinkinPWM_ID = 0;
     public static final double blinkTime = 7.5;  

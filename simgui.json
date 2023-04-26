@@ -65,8 +65,32 @@
         "Autonomous Command": {
           "open": true
         },
+        "Swerve": {
+          "Field": {
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       }
     }
+  },
+  "NetworkTables Info": {
+    "AdvantageScope": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "visible": true
   }
 }

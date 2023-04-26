@@ -196,6 +196,7 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         updateOdometry();
         SmartDashboard.putData("Swerve", Swerve.getInstance());
+        // SmartDashboard.putData("Swerve/pose", Swerve.getInstance().getPose());
         SmartDashboard.putString("Swerve/CurrentPosition", getPose().getX() + " " + getPose().getY() + " " + getPose().getRotation().getDegrees() + " ");
         SmartDashboard.putNumber("Swerve/Angle", getGyroAngle());
         mField.setRobotPose(getPose());
