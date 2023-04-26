@@ -8,7 +8,7 @@ import frc.robot.Subsystems.Drivetrain.Swerve;
 
 public class RobotContainer {
   private final XboxController xDrive = new XboxController(0);
-  private final XboxController xManip = new XboxController(1);
+  // private final XboxController xManip = new XboxController(1);
 
   private final Swerve mSwerve = Swerve.getInstance();
 
