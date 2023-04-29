@@ -1,6 +1,9 @@
 package frc.robot;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
@@ -11,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.Custom.lib.util.COTSFalconSwerveConstants;
 import frc.robot.Custom.lib.util.SwerveModuleConstants;
 
@@ -236,7 +240,51 @@ public final class Constants {
     public static final int LeftLimeLightPort = 5600;
     public static final int CenterLimeLightPort = 5000;
 
-    
+    /* AdvantageKit */
+    private static final RobotType robot = RobotType.ROBOT_2022S;
+    public static final double loopPeriodSecs = 0.02;
+    public static final boolean tuningMode = false;
+  
+    // private static final Alert invalidRobotAlert =
+    //     new Alert("Invalid robot selected, using competition robot as default.",
+    //         AlertType.ERROR);
+  
+    public static RobotType getRobot() {
+      if (RobotBase.isReal()) {
+        if (robot == RobotType.ROBOT_SIMBOT) { // Invalid robot selected
+          // invalidRobotAlert.set(true);
+          return RobotType.ROBOT_2022S;
+        } else {
+          return robot;
+        }
+      } else {
+        return robot;
+      }
+    }
+  
+    public static Mode getMode() {
+      switch (getRobot()) {
+        case ROBOT_2022S:
+          return RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+  
+        case ROBOT_SIMBOT:
+          return Mode.SIM;
+  
+        default:
+          return Mode.REAL;
+      }
+    }
+  
+    public static final Map<RobotType, String> logFolders =
+        Map.of(RobotType.ROBOT_2022S, "/media/sda2");
+  
+    public static enum RobotType {
+      ROBOT_2022S, ROBOT_SIMBOT
+    }
+  
+    public static enum Mode {
+      REAL, REPLAY, SIM
+    }
   }
 
   public static class Lights {

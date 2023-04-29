@@ -32,7 +32,7 @@
           "visible": true
         }
       },
-      "/SmartDashboard/field": {
+      "/SmartDashboard/Swerve/Field": {
         "window": {
           "visible": true
         }
@@ -40,6 +40,9 @@
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
     "retained": {
       "SmartDashboard": {
         "Autonomous Command": {
@@ -80,15 +83,15 @@
       "Publishers": {
         "open": true
       },
-      "Subscribers": {
-        "open": true
-      },
       "open": true
     },
     "Clients": {
       "open": true
     },
     "Connections": {
+      "open": true
+    },
+    "Server": {
       "open": true
     },
     "visible": true

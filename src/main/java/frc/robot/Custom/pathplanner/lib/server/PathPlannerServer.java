@@ -20,7 +20,7 @@ import java.util.List;
 
 public class PathPlannerServer {
   private static volatile boolean isRunning = false;
-  private static List<PathPlannerServerThread> clients =
+  public static List<PathPlannerServerThread> clients =
       Collections.synchronizedList(new ArrayList<>());
 
   public static void startServer(int serverPort) {

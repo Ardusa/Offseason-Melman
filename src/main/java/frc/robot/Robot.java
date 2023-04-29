@@ -4,16 +4,24 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.server.PathPlannerServer;
+import frc.robot.Custom.pathplanner.lib.server.PathPlannerServer;
+
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.inputs.LoggedPowerDistribution;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import frc.robot.Auton.chooser;
 import frc.robot.Auton.pathPlannerChooser;
 import frc.robot.Commands.Swerve.balance;
@@ -21,16 +29,70 @@ import frc.robot.Custom.CTREConfigs;
 import frc.robot.Custom.LoggyThings.LoggyThingManager;
 import frc.robot.Subsystems.Drivetrain.Swerve;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     public chooser chooser;
     public pathPlannerChooser pathPlanner;
     private Command m_autonomousCommand;
     public SendableChooser<String> autonChooser;
     public static CTREConfigs ctreConfigs;
 
+    public Robot() {
+        super(0.02);
+    }
+
     @Override
     public void robotInit() {
-        PathPlannerServer.startServer(Constants.softwareConstants.PathPlannerLibPort);
+        /* Advantage Kit - Start */
+        Logger logger = Logger.getInstance();
+        setUseTiming(Constants.softwareConstants.getMode() != Constants.softwareConstants.Mode.REPLAY);
+        logger.recordMetadata("Robot", Constants.softwareConstants.getRobot().toString());
+        logger.recordMetadata("TuningMode", Boolean.toString(Constants.softwareConstants.tuningMode));
+        // logger.recordMetadata("RuntimeType", getRuntimeType().toString());
+        // logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
+        // logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
+        // logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
+        // logger.recordMetadata("GitDate", BuildConstants.GIT_DATE);
+        // logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH);
+        // switch (BuildConstants.DIRTY) {
+        //   case 0:
+        //     logger.recordMetadata("GitDirty", "All changes committed");
+        //     break;
+        //   case 1:
+        //     logger.recordMetadata("GitDirty", "Uncomitted changes");
+        //     break;
+        //   default:
+        //     logger.recordMetadata("GitDirty", "Unknown");
+        //     break;
+        // }
+    
+        // switch (Constants.softwareConstants.getMode()) {
+        //   case REAL:
+        //     String folder = Constants.softwareConstants.logFolders.get(Constants.softwareConstants.getRobot());
+        //     if (folder != null) {
+        //       logger.addDataReceiver(new WPILOGWriter(folder));
+        //     }
+        //     logger.addDataReceiver(new NT4Publisher());
+        //     LoggedPowerDistribution.getInstance();
+        //     break;
+    
+        //   case SIM:
+        //     logger.addDataReceiver(new NT4Publisher());
+        //     break;
+    
+        //   case REPLAY:
+        //     String path = LogFileUtil.findReplayLog();
+        //     logger.setReplaySource(new WPILOGReader(path));
+        //     logger.addDataReceiver(
+        //         new WPILOGWriter(LogFileUtil.addPathSuffix(path, "_sim")));
+        //     break;
+        // }
+        
+        logger.start();
+
+        /* Advantage Kit - End */
+
+        PathPlannerServer.startServer(1232);
+        
         ctreConfigs = new CTREConfigs();
         new RobotContainer();
 
@@ -43,15 +105,15 @@ public class Robot extends TimedRobot {
         autonChooser.addOption("Place and Charge Path", "1pieceAndCharge");
         SmartDashboard.putData("Autonomous Command", autonChooser);
 
-        CommandScheduler.getInstance().onCommandInitialize((Command c) -> {DataLogManager.log("INITIALIZED: " + c.getName());});
-        CommandScheduler.getInstance().onCommandFinish((Command c) -> {DataLogManager.log("FINISHED: " + c.getName());});
-        CommandScheduler.getInstance().onCommandInterrupt((Command c) -> {DataLogManager.log("INTERUPTED: " + c.getName());});
+        // CommandScheduler.getInstance().onCommandInitialize((Command c) -> {DataLogManager.log("INITIALIZED: " + c.getName());});
+        // CommandScheduler.getInstance().onCommandFinish((Command c) -> {DataLogManager.log("FINISHED: " + c.getName());});
+        // CommandScheduler.getInstance().onCommandInterrupt((Command c) -> {DataLogManager.log("INTERUPTED: " + c.getName());});
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        LoggyThingManager.getInstance().periodic();
+        // LoggyThingManager.getInstance().periodic();
     }
 
     @Override
