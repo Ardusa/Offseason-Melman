@@ -10,25 +10,27 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import java.io.File;
+
+import com.ctre.phoenixpro.hardware.Pigeon2;
+
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
+import swervelib.imu.Pigeon2Swerve;
+import swervelib.imu.SwerveIMU;
 import swervelib.math.SwerveKinematics2;
+import swervelib.parser.PIDFConfig;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
+import swervelib.simulation.SwerveIMUSimulation;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class Swerve extends SubsystemBase {
     private static Swerve mInstance;
-
-    public static Swerve getInstance() {
-        if (mInstance == null) {
-            mInstance = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve"));
-        }
-        return mInstance;
-    }
 
     /**
      * Swerve drive object.
@@ -49,6 +51,20 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public static Swerve getInstance() {
+        if (mInstance == null) {
+            // mInstance = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve"));
+            mInstance = new Swerve(
+                Constants.Swerve.SwerveConfig,
+                new SwerveControllerConfiguration(
+                    Constants.Swerve.SwerveConfig,
+                    new PIDFConfig(0.118, 0, 0) //Copied from BroncBotz json config
+                )
+            );
+        }
+        return mInstance;
+    }
+
     /**
      * Construct the swerve drive.
      *
@@ -57,8 +73,9 @@ public class Swerve extends SubsystemBase {
      */
     public Swerve(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg) {
         swerveDrive = new SwerveDrive(
-                driveCfg,
-                controllerCfg);
+            driveCfg,
+            controllerCfg
+        );
     }
 
     /**

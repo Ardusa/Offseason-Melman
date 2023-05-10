@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
@@ -13,8 +14,14 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Custom.lib.util.COTSFalconSwerveConstants;
 import frc.robot.Custom.lib.util.SwerveModuleConstants;
-import swervelib.motors.SwerveMotor;
+import swervelib.encoders.CANCoderSwerve;
+import swervelib.imu.Pigeon2Swerve;
+import swervelib.imu.SwerveIMU;
+import swervelib.motors.TalonFXSwerve;
+import swervelib.parser.PIDFConfig;
+import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveModuleConfiguration;
+import swervelib.parser.SwerveModulePhysicalCharacteristics;
 
 //Numbering system for drivetrain: 0 - front left, 1 - front right, 2 - back left, 3 - back right
 //0.42545 + 0.254/2
@@ -37,6 +44,7 @@ public final class Constants {
 		/* Drivetrain Constants */
 		public static final double trackWidth = 0.501; // 19.72 inches
 		public static final double wheelBase = 0.615; // 24.21 Inches
+		public static final double wheelDiameter = chosenModule.wheelDiameter;
 		public static final double wheelCircumference = chosenModule.wheelCircumference;
 
 		/*
@@ -50,6 +58,25 @@ public final class Constants {
 				new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // Back Left
 				new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0) // Back Right
 		);
+
+		public static final SwerveModuleConfiguration[] swerveConfigs = {
+			Mod0.config,
+			Mod1.config,
+			Mod2.config,
+			Mod3.config
+		};
+
+		public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
+			Constants.Swerve.swerveConfigs,
+			Constants.Swerve.SwerveIMU,
+			Constants.Swerve.maxSpeed,
+			Constants.Swerve.invertedIMU
+		);
+
+		public static final int Pigeon2_ID = 3;
+
+		public static final SwerveIMU SwerveIMU = new Pigeon2Swerve(Pigeon2_ID);
+		public static final boolean invertedIMU = false; 
 
 		/* Module Gear Ratios */
 		public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -114,9 +141,6 @@ public final class Constants {
 		public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
 		public static final double targetOffset = 0;
-
-		public static final int Pigeon2_ID = 3;
-
 		/* Module Specific Constants */
 
 		// TODO: Switched Mod Constants, redo Falcon IDs
@@ -127,10 +151,31 @@ public final class Constants {
 			public static final int angleMotorID = 21;
 			public static final int canCoderID = 22;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.40);
-			// public static final SwerveModuleConfiguration config =
-				// new SwerveModuleConfiguration(null, null, null, kRange, stickDeadband, fieldWidth, null, null, fieldLength, null, null);
-			public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-					canCoderID, angleOffset);
+			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
+				driveMotorID, angleMotorID, canCoderID, angleOffset
+			);
+
+			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+				new CANCoderSwerve(canCoderID),
+				angleOffset.getDegrees(),
+				wheelBase/2,
+				trackWidth/2,
+				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
+				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
+				maxSpeed,
+				new SwerveModulePhysicalCharacteristics(
+					chosenModule.driveGearRatio,
+					chosenModule.angleGearRatio,
+					wheelDiameter,
+					openLoopRamp,
+					openLoopRamp,
+					2048,
+					2048
+				),
+				"FrontLeft"
+			);
 		}
 
 		/* Front Right Module - Module 1 */
@@ -139,8 +184,31 @@ public final class Constants {
 			public static final int angleMotorID = 10;
 			public static final int canCoderID = 12;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
-			public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-					canCoderID, angleOffset);
+			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
+				driveMotorID, angleMotorID, canCoderID, angleOffset
+			);
+			
+			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+				new CANCoderSwerve(canCoderID),
+				angleOffset.getDegrees(),
+				wheelBase/2,
+				trackWidth/2,
+				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
+				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
+				maxSpeed,
+				new SwerveModulePhysicalCharacteristics(
+					chosenModule.driveGearRatio,
+					chosenModule.angleGearRatio,
+					wheelDiameter,
+					openLoopRamp,
+					openLoopRamp,
+					2048,
+					2048
+				),
+				"FrontRight"
+			);
 		}
 
 		/* Back Left Module - Module 2 */
@@ -149,8 +217,31 @@ public final class Constants {
 			public static final int angleMotorID = 31;
 			public static final int canCoderID = 32;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(102.537);
-			public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-					canCoderID, angleOffset);
+			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
+				driveMotorID, angleMotorID, canCoderID, angleOffset
+			);
+						
+			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+				new CANCoderSwerve(canCoderID),
+				angleOffset.getDegrees(),
+				wheelBase/2,
+				trackWidth/2,
+				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
+				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
+				maxSpeed,
+				new SwerveModulePhysicalCharacteristics(
+					chosenModule.driveGearRatio,
+					chosenModule.angleGearRatio,
+					wheelDiameter,
+					openLoopRamp,
+					openLoopRamp,
+					2048,
+					2048
+				),
+				"BackLeft"
+			);
 		}
 
 		/* Back Right Module - Module 3 */
@@ -159,8 +250,31 @@ public final class Constants {
 			public static final int angleMotorID = 41;
 			public static final int canCoderID = 42;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(95.086);
-			public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-					canCoderID, angleOffset);
+			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
+				driveMotorID, angleMotorID, canCoderID, angleOffset
+			);
+						
+			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+				new CANCoderSwerve(canCoderID),
+				angleOffset.getDegrees(),
+				wheelBase/2,
+				trackWidth/2,
+				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
+				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
+				maxSpeed,
+				new SwerveModulePhysicalCharacteristics(
+					chosenModule.driveGearRatio,
+					chosenModule.angleGearRatio,
+					wheelDiameter,
+					openLoopRamp,
+					openLoopRamp,
+					2048,
+					2048
+				),
+				"BackRight"
+			);
 		}
 
 		public static final class balancePID {

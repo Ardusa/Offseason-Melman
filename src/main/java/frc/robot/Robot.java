@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.server.PathPlannerServer;
+import com.revrobotics.REVPhysicsSim;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -113,5 +114,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void simulationInit() {}
+    
+    @Override
+    public void simulationPeriodic() {
+        REVPhysicsSim.getInstance().run();
+    }
 
 }
