@@ -163,7 +163,7 @@ public final class Constants {
 				wheelBase/2,
 				trackWidth/2,
 				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
-				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
+				new PIDFConfig(driveKP, driveKI, driveKD, driveKF),		//TODO: Velocity PIDF values
 				maxSpeed,
 				new SwerveModulePhysicalCharacteristics(
 					chosenModule.driveGearRatio,
@@ -194,7 +194,7 @@ public final class Constants {
 				new CANCoderSwerve(canCoderID),
 				angleOffset.getDegrees(),
 				wheelBase/2,
-				trackWidth/2,
+				-trackWidth/2,
 				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
 				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
 				maxSpeed,
@@ -226,7 +226,7 @@ public final class Constants {
 				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
 				new CANCoderSwerve(canCoderID),
 				angleOffset.getDegrees(),
-				wheelBase/2,
+				-wheelBase/2,
 				trackWidth/2,
 				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
 				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
@@ -259,8 +259,8 @@ public final class Constants {
 				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
 				new CANCoderSwerve(canCoderID),
 				angleOffset.getDegrees(),
-				wheelBase/2,
-				trackWidth/2,
+				-wheelBase/2,
+				-trackWidth/2,
 				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
 				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
 				maxSpeed,

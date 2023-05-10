@@ -1,4 +1,13 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "Pigeon 2[13]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -22,9 +31,10 @@
       "/LiveWindow/Ungrouped/Talon FX [40]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [41]": "Motor Controller",
       "/SmartDashboard/Autonomous Command": "String Chooser",
-      "/SmartDashboard/Swerve": "Subsystem",
-      "/SmartDashboard/Swerve/Field": "Field2d",
-      "/SmartDashboard/field": "Field2d"
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Pigeon 2 [3]": "Gyro",
+      "/SmartDashboard/field": "Field2d",
+      "/SmartDashboard/gyro": "Gyro"
     },
     "windows": {
       "/SmartDashboard/Autonomous Command": {
@@ -32,7 +42,22 @@
           "visible": true
         }
       },
-      "/SmartDashboard/Swerve/Field": {
+      "/SmartDashboard/Field": {
+        "XModules": {
+          "arrowColor": [
+            0.0,
+            164.33340454101563,
+            255.0,
+            255.0
+          ],
+          "arrowSize": 27,
+          "style": "Hidden"
+        },
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/gyro": {
         "window": {
           "visible": true
         }
@@ -40,6 +65,9 @@
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
     "retained": {
       "SmartDashboard": {
         "Autonomous Command": {
@@ -52,17 +80,16 @@
       "LiveWindow": {
         ".status": {
           "open": true
-        },
-        "Swerve": {
-          "open": true
-        },
-        "open": true
+        }
       },
       "Shuffleboard": {
         "open": true
       },
       "SmartDashboard": {
-        "Autonomous Command": {
+        "PPSwerveControllerCommand": {
+          "open": true
+        },
+        "Pigeon 2 [3]": {
           "open": true
         },
         "Swerve": {
@@ -71,7 +98,10 @@
           },
           "open": true
         },
-        "open": true
+        "open": true,
+        "swerve": {
+          "open": true
+        }
       }
     }
   },

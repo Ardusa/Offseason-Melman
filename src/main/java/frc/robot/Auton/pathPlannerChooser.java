@@ -46,6 +46,7 @@ public class pathPlannerChooser {
                 PathPlanner.getConstraintsFromPath(path)
             );
             pathPlannerTrajectory = PathPlannerTrajectory.transformTrajectoryForAlliance(pathPlannerTrajectory, DriverStation.getAlliance());
+            mSwerve.resetOdometry(pathPlannerTrajectory.getInitialHolonomicPose());
         }
         eventMap1.put("done", new InstantCommand(() -> autonFinished = true));
         
@@ -53,11 +54,11 @@ public class pathPlannerChooser {
         // eventMap1.put("print", Commands.print("print"));
         // eventMap1.put("testmark", Commands.print("testmark"));
         // eventMap1.put("balance", new balance());
-        autonPoses();
+
+        // autonPoses();
     }
 
     public Command generateTrajectory() {
-
         if (selectedAuton.equals("null")) {
             return Commands.print("Null Path");
         } else {
@@ -65,9 +66,9 @@ public class pathPlannerChooser {
                 new PPSwerveControllerCommand(
                         pathPlannerTrajectory,
                         mSwerve::getPose,
-                        new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                        new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-                        new PIDController(Constants.AutoConstants.kPThetaController, 0, 0),
+                        new PIDController(10, 0, 0),
+                        new PIDController(8, 0, 0),
+                        new PIDController(1, 0, 0),
                         mSwerve::setChassisSpeeds,
                         mSwerve
                 ),

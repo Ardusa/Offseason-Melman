@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Auton.chooser;
 import frc.robot.Auton.pathPlannerChooser;
@@ -76,7 +77,8 @@ public class Robot extends TimedRobot {
             m_autonomousCommand.schedule();
         }
 
-        new Trigger(() -> pathPlanner.autonFinished).onTrue(new balance().repeatedly().until(() -> Math.abs(Swerve.getInstance().getPitchAngle()) <= 0.05));
+        new Trigger(() -> pathPlanner.autonFinished).onTrue(new InstantCommand(() -> Swerve.getInstance().lock(), Swerve.getInstance()));
+            // .onTrue(new balance().repeatedly().until(() -> Math.abs(Swerve.getInstance().getPitchAngle()) <= 0.05));
         // System.out.println(pathPlanner.autonPoses());
     }
 

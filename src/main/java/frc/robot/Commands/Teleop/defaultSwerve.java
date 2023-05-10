@@ -16,7 +16,6 @@ public class defaultSwerve extends CommandBase {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
-    private BooleanSupplier robotCentricSup;
     private BooleanSupplier BoB; // Baby on Board
 
     /**
@@ -24,10 +23,9 @@ public class defaultSwerve extends CommandBase {
      * @param translationSup (DoubleSupplier) Forward & Backwards
      * @param strafeSup (DoubleSupplier) Left & Right
      * @param rotationSup (DoubleSupplier) Turning angle
-     * @param robotCentricSup (BooleanSupplier) Whether or not the robot drives from its own POV
      * @param BoB (BooleanSupplier) Decrease speed for sensitive movement
      */
-    public defaultSwerve(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier BoB) {
+    public defaultSwerve(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier BoB) {
         addRequirements(mSwerve);
 
         /* Set the param negative could be solution */
@@ -36,8 +34,12 @@ public class defaultSwerve extends CommandBase {
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
-        this.robotCentricSup = robotCentricSup;
         this.BoB = BoB;
+    }
+
+    @Override
+    public void initialize() {
+        mSwerve.robotCentricSup = false;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class defaultSwerve extends CommandBase {
         mSwerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
             rotationVal * Constants.Swerve.maxAngularVelocity, 
-            !robotCentricSup.getAsBoolean(), 
+            !mSwerve.robotCentricSup, 
             true
         );
     }
