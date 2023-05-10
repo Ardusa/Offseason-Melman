@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
         }
 
         new Trigger(() -> pathPlanner.autonFinished).onTrue(new balance().repeatedly().until(() -> Math.abs(Swerve.getInstance().getPitchAngle()) <= 0.05));
+        // System.out.println(pathPlanner.autonPoses());
     }
 
     @Override

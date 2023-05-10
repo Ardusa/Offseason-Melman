@@ -20,14 +20,14 @@ public class RobotContainer {
     /* Default Commands */
     mSwerve.setDefaultCommand(
       new defaultSwerve(
-        () -> -xDrive.getLeftX(),
-        () -> -xDrive.getLeftY(),
-        () -> -xDrive.getRightX(),
+        xDrive::getLeftX,
+        xDrive::getLeftY,
+        xDrive::getRightX,
         xDrive::getStartButton,
         xDrive::getRightBumper
     ));
 
     new JoystickButton(xDrive, XboxController.Button.kBack.value).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
-    new JoystickButton(xDrive, XboxController.Button.kB.value).onTrue(new InstantCommand(mSwerve::lockPosition, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
+    new JoystickButton(xDrive, XboxController.Button.kB.value).onTrue(new InstantCommand(mSwerve::lock, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
   }
 }

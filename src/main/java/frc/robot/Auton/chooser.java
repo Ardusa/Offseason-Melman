@@ -3,6 +3,10 @@ package frc.robot.Auton;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
@@ -50,17 +54,26 @@ public class chooser extends CommandBase {
         if (selectedAuton.equals(nullPath)) {
             return Commands.print("Null Path");
         } else {
-            return new SwerveControllerCommand(
-                // TrajectoryUtil.fromPathweaverJson(AutonPath),
-                trajectory,
+            return new PPSwerveControllerCommand(
+                PathPlanner.loadPath(selectedAuton, PathPlanner.getConstraintsFromPath(selectedAuton)),
                 mSwerve::getPose,
-                Constants.Swerve.swerveKinematics,
                 new PIDController(Constants.AutoConstants.kPXController, 0, 0),
                 new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-                thetaController,
-                mSwerve::setModuleStates,
+                new PIDController(Constants.AutoConstants.kPThetaController, 0, 0),
+                mSwerve::setChassisSpeeds,
                 mSwerve
             );
+            // return new SwerveControllerCommand(
+            //     // TrajectoryUtil.fromPathweaverJson(AutonPath),
+            //     trajectory,
+            //     mSwerve::getPose,
+            //     Constants.Swerve.swerveKinematics,
+            //     new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+            //     new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+            //     thetaController,
+            //     mSwerve::setModuleStates,
+            //     mSwerve
+            // );
         }
     }
 

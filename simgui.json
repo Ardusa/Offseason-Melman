@@ -32,7 +32,7 @@
           "visible": true
         }
       },
-      "/SmartDashboard/field": {
+      "/SmartDashboard/Swerve/Field": {
         "window": {
           "visible": true
         }

@@ -1,19 +1,23 @@
 package frc.robot.Auton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain.Swerve;
 
@@ -49,7 +53,7 @@ public class pathPlannerChooser {
         // eventMap1.put("print", Commands.print("print"));
         // eventMap1.put("testmark", Commands.print("testmark"));
         // eventMap1.put("balance", new balance());
-
+        autonPoses();
     }
 
     public Command generateTrajectory() {
@@ -58,15 +62,14 @@ public class pathPlannerChooser {
             return Commands.print("Null Path");
         } else {
             return new FollowPathWithEvents(
-                new SwerveControllerCommand(
-                    pathPlannerTrajectory,
-                    mSwerve::getPose,
-                    Constants.Swerve.swerveKinematics,
-                    new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                    new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-                    thetaController,
-                    mSwerve::setModuleStates,
-                    mSwerve
+                new PPSwerveControllerCommand(
+                        pathPlannerTrajectory,
+                        mSwerve::getPose,
+                        new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+                        new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                        new PIDController(Constants.AutoConstants.kPThetaController, 0, 0),
+                        mSwerve::setChassisSpeeds,
+                        mSwerve
                 ),
                 pathPlannerTrajectory.getMarkers(),
                 eventMap1
@@ -76,5 +79,29 @@ public class pathPlannerChooser {
 
     public Trajectory getTrajectory() {
         return pathPlannerTrajectory;
+    }
+
+    public void autonPoses() {
+        // String poses = "[";
+        List<Double> doublePoses = new ArrayList<>();
+        Double[] array = {};
+        // for (State state : pathPlannerTrajectory.getStates()) {
+        //     poses += (state.poseMeters.getX() + "," + state.poseMeters.getY() + "," + state.poseMeters.getRotation().getDegrees() + ",");
+        // }
+        // poses += (pathPlannerTrajectory.getEndState().poseMeters.getX() + "," + pathPlannerTrajectory.getEndState().poseMeters.getY() + "," + pathPlannerTrajectory.getEndState().poseMeters.getRotation().getDegrees() + "]");
+        
+        // SmartDashboard.putString("Autonomous Command/Auton Poses", poses);
+        // return poses;
+
+        /////////////////////
+        for (State state : pathPlannerTrajectory.getStates()) {
+            doublePoses.add(state.poseMeters.getX());
+            doublePoses.add(state.poseMeters.getY());
+            doublePoses.add(state.poseMeters.getRotation().getDegrees());
+            // poses += (state.poseMeters.getX() + "," + state.poseMeters.getY() + "," + state.poseMeters.getRotation().getDegrees() + ",");
+        }
+        // poses += (pathPlannerTrajectory.getEndState().poseMeters.getX() + "," + pathPlannerTrajectory.getEndState().poseMeters.getY() + "," + pathPlannerTrajectory.getEndState().poseMeters.getRotation().getDegrees() + "]");
+        SmartDashboard.putNumberArray("Auton Poses", doublePoses.toArray(array));
+        // return doublePoses;
     }
 }

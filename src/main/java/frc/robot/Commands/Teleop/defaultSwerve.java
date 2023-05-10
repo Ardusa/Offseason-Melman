@@ -31,7 +31,7 @@ public class defaultSwerve extends CommandBase {
         addRequirements(mSwerve);
 
         /* Set the param negative could be solution */
-        mSwerve.setGyro(mSwerve.getPose().getRotation().getDegrees());
+        // mSwerve.setGyro(mSwerve.getPose().getRotation().getDegrees());
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
@@ -43,9 +43,9 @@ public class defaultSwerve extends CommandBase {
     @Override
     public void execute() {
         /* Get Values, Deadband*/
-        double translationVal = Utils.customDeadzone(translationSup.getAsDouble());
-        double strafeVal = Utils.customDeadzone(strafeSup.getAsDouble());
-        double rotationVal = Utils.customDeadzone(rotationSup.getAsDouble());
+        double translationVal = Utils.customDeadzone(-translationSup.getAsDouble());
+        double strafeVal = Utils.customDeadzone(-strafeSup.getAsDouble());
+        double rotationVal = Utils.customDeadzone(-rotationSup.getAsDouble());
 
         if(BoB.getAsBoolean()) {
             translationVal *= Constants.Swerve.BoBmultiplier;
