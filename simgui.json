@@ -77,6 +77,9 @@
       }
     },
     "transitory": {
+      "FMSInfo": {
+        "open": true
+      },
       "LiveWindow": {
         ".status": {
           "open": true
@@ -86,6 +89,9 @@
         "open": true
       },
       "SmartDashboard": {
+        "Autonomous Command": {
+          "open": true
+        },
         "PPSwerveControllerCommand": {
           "open": true
         },
@@ -98,7 +104,6 @@
           },
           "open": true
         },
-        "open": true,
         "swerve": {
           "open": true
         }
@@ -115,11 +120,13 @@
       },
       "open": true
     },
-    "Clients": {
-      "open": true
-    },
-    "Connections": {
-      "open": true
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      }
     },
     "visible": true
   }

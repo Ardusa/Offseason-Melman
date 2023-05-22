@@ -19,6 +19,7 @@ public class Vision {
 
     private static Vision Instance;
     private double value;
+    // private Limelight limelight = new LimeLight();
 
     private final NetworkTable mLeftLimelight = NetworkTableInstance.getDefault().getTable("limelight-left");
     private DoubleArraySubscriber mLeftPosition = mLeftLimelight.getDoubleArrayTopic("botpose_wpiblue")
