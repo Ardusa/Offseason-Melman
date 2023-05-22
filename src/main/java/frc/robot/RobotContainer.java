@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.Teleop.defaultSwerve;
 import frc.robot.Subsystems.Drivetrain.Swerve;
@@ -36,8 +37,13 @@ public class RobotContainer {
         xDrive::getRightBumper
     ));
 
-    new JoystickButton(xDrive, XboxController.Button.kBack.value).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
-    new JoystickButton(xDrive, XboxController.Button.kB.value).onTrue(new InstantCommand(mSwerve::lock, mSwerve)).debounce(Constants.OperatorConstants.Debounce.kButton);
+    new JoystickButton(xDrive, XboxController.Button.kBack.value).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve))
+      .debounce(Constants.OperatorConstants.Debounce.kButton);
+    new JoystickButton(xDrive, XboxController.Button.kB.value).onTrue(new InstantCommand(mSwerve::lock, mSwerve))
+      .debounce(Constants.OperatorConstants.Debounce.kButton);
+    
+    new JoystickButton(xManip, XboxController.Button.kA.value).onTrue(new PrintCommand("I hate yellow"));
+    
   }
 
   private void configureSimBindings() {

@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Auton.chooser;
 import frc.robot.Auton.pathPlannerChooser;
-import frc.robot.Commands.Swerve.balance;
 import frc.robot.Custom.CTREConfigs;
 import frc.robot.Custom.LoggyThings.LoggyThingManager;
 import frc.robot.Subsystems.Drivetrain.Swerve;

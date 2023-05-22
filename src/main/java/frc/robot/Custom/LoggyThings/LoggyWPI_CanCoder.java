@@ -10,7 +10,6 @@ public class LoggyWPI_CanCoder extends WPI_CANCoder implements ILoggyMotor{
     private EnumSet<ILoggyMotor.LogItem> mLogLevel = EnumSet.noneOf(ILoggyMotor.LogItem.class);
     private HashMap<LogItem, DataLogEntryWithHistory> mDataLogEntries = new HashMap<LogItem, DataLogEntryWithHistory>();
     private long mLogPeriod = 100000;// default to 100ms (unit is microseconds)
-    private long lastLogTime = (long)Math.abs(Math.random()*100000);
     private String mLogPath;
 
     public LoggyWPI_CanCoder(int deviceNumber, String canbus, String logPath, EnumSet<ILoggyMotor.LogItem> logLevel) {
@@ -41,6 +40,10 @@ public class LoggyWPI_CanCoder extends WPI_CANCoder implements ILoggyMotor{
     @Override
     public void setMinimumLogPeriod(double logPeriodSeconds) {
         mLogPeriod = (long) (logPeriodSeconds * 1e6);
+    }
+
+    public long getMinimumLogPeriod() {
+        return mLogPeriod;
     }
 
     @Override
