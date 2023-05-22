@@ -7,6 +7,7 @@ package frc.robot;
 import com.pathplanner.lib.server.PathPlannerServer;
 import com.revrobotics.REVPhysicsSim;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -16,9 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Auton.MustangTrail;
 import frc.robot.Auton.chooser;
 import frc.robot.Auton.pathPlannerChooser;
-import frc.robot.Commands.Swerve.balance;
 import frc.robot.Custom.CTREConfigs;
 import frc.robot.Custom.LoggyThings.LoggyThingManager;
 import frc.robot.Subsystems.Drivetrain.Swerve;
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     public SendableChooser<String> autonChooser;
     public static CTREConfigs ctreConfigs;
+    public MustangTrail mustangTrail;
 
     @Override
     public void robotInit() {
@@ -106,6 +108,14 @@ public class Robot extends TimedRobot {
     @Override
     public void testInit() {
         CommandScheduler.getInstance().cancelAll();
+
+        int[] teams = {1, 2, 3};
+        mustangTrail = new MustangTrail(teams);
+        // System.out.println(mustangTrail);
+        System.out.println(mustangTrail.getTable(1));
+        System.out.println(NetworkTableInstance.getDefault().getTable("/SmartDashboard/"));
+        // System.out.println(SmartDashboard.updateValues();;
+
     }
 
     @Override
@@ -115,7 +125,8 @@ public class Robot extends TimedRobot {
     public void testExit() {}
 
     @Override
-    public void simulationInit() {}
+    public void simulationInit() {
+    }
     
     @Override
     public void simulationPeriodic() {
