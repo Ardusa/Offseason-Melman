@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.EnumSet;
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -12,8 +15,14 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.Custom.Utils;
+import frc.robot.Custom.PathPlanner.PathPoint;
+import frc.robot.Custom.Utils.Vector2D;
 import frc.robot.Custom.lib.util.COTSFalconSwerveConstants;
 import frc.robot.Custom.lib.util.SwerveModuleConstants;
+import frc.robot.Subsystems.CraneAssembly.Arm.ViolationType;
 import swervelib.encoders.CANCoderSwerve;
 import swervelib.imu.Pigeon2Swerve;
 import swervelib.imu.SwerveIMU;
@@ -60,23 +69,22 @@ public final class Constants {
 		);
 
 		public static final SwerveModuleConfiguration[] swerveConfigs = {
-			Mod0.config,
-			Mod1.config,
-			Mod2.config,
-			Mod3.config
+				Mod0.config,
+				Mod1.config,
+				Mod2.config,
+				Mod3.config
 		};
 
 		public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
-			Constants.Swerve.swerveConfigs,
-			Constants.Swerve.SwerveIMU,
-			Constants.Swerve.maxSpeed,
-			Constants.Swerve.invertedIMU
-		);
+				Constants.Swerve.swerveConfigs,
+				Constants.Swerve.SwerveIMU,
+				Constants.Swerve.maxSpeed,
+				Constants.Swerve.invertedIMU);
 
 		public static final int Pigeon2_ID = 3;
 
 		public static final SwerveIMU SwerveIMU = new Pigeon2Swerve(Pigeon2_ID);
-		public static final boolean invertedIMU = false; 
+		public static final boolean invertedIMU = false;
 
 		/* Module Gear Ratios */
 		public static final double driveGearRatio = chosenModule.driveGearRatio;
@@ -152,30 +160,28 @@ public final class Constants {
 			public static final int canCoderID = 22;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.40);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
-				driveMotorID, angleMotorID, canCoderID, angleOffset
-			);
+					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
 			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
-				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
-				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
-				new CANCoderSwerve(canCoderID),
-				angleOffset.getDegrees(),
-				wheelBase/2,
-				trackWidth/2,
-				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
-				new PIDFConfig(driveKP, driveKI, driveKD, driveKF),		//TODO: Velocity PIDF values
-				maxSpeed,
-				new SwerveModulePhysicalCharacteristics(
-					chosenModule.driveGearRatio,
-					chosenModule.angleGearRatio,
-					wheelDiameter,
-					openLoopRamp,
-					openLoopRamp,
-					2048,
-					2048
-				),
-				"FrontLeft"
-			);
+					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+					new CANCoderSwerve(canCoderID),
+					angleOffset.getDegrees(),
+					wheelBase / 2,
+					trackWidth / 2,
+					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
+							chosenModule.angleKF),
+					new PIDFConfig(driveKP, driveKI, driveKD, driveKF), //TODO: Velocity PIDF values
+					maxSpeed,
+					new SwerveModulePhysicalCharacteristics(
+							chosenModule.driveGearRatio,
+							chosenModule.angleGearRatio,
+							wheelDiameter,
+							openLoopRamp,
+							openLoopRamp,
+							2048,
+							2048),
+					"FrontLeft");
 		}
 
 		/* Front Right Module - Module 1 */
@@ -185,30 +191,28 @@ public final class Constants {
 			public static final int canCoderID = 12;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
-				driveMotorID, angleMotorID, canCoderID, angleOffset
-			);
-			
+					driveMotorID, angleMotorID, canCoderID, angleOffset);
+
 			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
-				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
-				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
-				new CANCoderSwerve(canCoderID),
-				angleOffset.getDegrees(),
-				wheelBase/2,
-				-trackWidth/2,
-				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
-				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
-				maxSpeed,
-				new SwerveModulePhysicalCharacteristics(
-					chosenModule.driveGearRatio,
-					chosenModule.angleGearRatio,
-					wheelDiameter,
-					openLoopRamp,
-					openLoopRamp,
-					2048,
-					2048
-				),
-				"FrontRight"
-			);
+					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+					new CANCoderSwerve(canCoderID),
+					angleOffset.getDegrees(),
+					wheelBase / 2,
+					-trackWidth / 2,
+					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
+							chosenModule.angleKF),
+					new PIDFConfig(0, 0), //TODO: Velocity PIDF values
+					maxSpeed,
+					new SwerveModulePhysicalCharacteristics(
+							chosenModule.driveGearRatio,
+							chosenModule.angleGearRatio,
+							wheelDiameter,
+							openLoopRamp,
+							openLoopRamp,
+							2048,
+							2048),
+					"FrontRight");
 		}
 
 		/* Back Left Module - Module 2 */
@@ -218,30 +222,28 @@ public final class Constants {
 			public static final int canCoderID = 32;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(102.537);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
-				driveMotorID, angleMotorID, canCoderID, angleOffset
-			);
-						
+					driveMotorID, angleMotorID, canCoderID, angleOffset);
+
 			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
-				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
-				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
-				new CANCoderSwerve(canCoderID),
-				angleOffset.getDegrees(),
-				-wheelBase/2,
-				trackWidth/2,
-				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
-				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
-				maxSpeed,
-				new SwerveModulePhysicalCharacteristics(
-					chosenModule.driveGearRatio,
-					chosenModule.angleGearRatio,
-					wheelDiameter,
-					openLoopRamp,
-					openLoopRamp,
-					2048,
-					2048
-				),
-				"BackLeft"
-			);
+					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+					new CANCoderSwerve(canCoderID),
+					angleOffset.getDegrees(),
+					-wheelBase / 2,
+					trackWidth / 2,
+					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
+							chosenModule.angleKF),
+					new PIDFConfig(0, 0), //TODO: Velocity PIDF values
+					maxSpeed,
+					new SwerveModulePhysicalCharacteristics(
+							chosenModule.driveGearRatio,
+							chosenModule.angleGearRatio,
+							wheelDiameter,
+							openLoopRamp,
+							openLoopRamp,
+							2048,
+							2048),
+					"BackLeft");
 		}
 
 		/* Back Right Module - Module 3 */
@@ -251,30 +253,28 @@ public final class Constants {
 			public static final int canCoderID = 42;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(95.086);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
-				driveMotorID, angleMotorID, canCoderID, angleOffset
-			);
-						
+					driveMotorID, angleMotorID, canCoderID, angleOffset);
+
 			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
-				new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
-				new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
-				new CANCoderSwerve(canCoderID),
-				angleOffset.getDegrees(),
-				-wheelBase/2,
-				-trackWidth/2,
-				new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD, chosenModule.angleKF),
-				new PIDFConfig(0, 0),		//TODO: Velocity PIDF values
-				maxSpeed,
-				new SwerveModulePhysicalCharacteristics(
-					chosenModule.driveGearRatio,
-					chosenModule.angleGearRatio,
-					wheelDiameter,
-					openLoopRamp,
-					openLoopRamp,
-					2048,
-					2048
-				),
-				"BackRight"
-			);
+					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
+					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
+					new CANCoderSwerve(canCoderID),
+					angleOffset.getDegrees(),
+					-wheelBase / 2,
+					-trackWidth / 2,
+					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
+							chosenModule.angleKF),
+					new PIDFConfig(0, 0), //TODO: Velocity PIDF values
+					maxSpeed,
+					new SwerveModulePhysicalCharacteristics(
+							chosenModule.driveGearRatio,
+							chosenModule.angleGearRatio,
+							wheelDiameter,
+							openLoopRamp,
+							openLoopRamp,
+							2048,
+							2048),
+					"BackRight");
 		}
 
 		public static final class balancePID {
@@ -304,6 +304,140 @@ public final class Constants {
 		public static final class homePoints {
 			public static final Pose2d kBlueLeft = new Pose2d(2.2, 4.65, new Rotation2d(180));
 		}
+	}
+	
+	public static class Arm {
+
+		public static final int shoulderMotorID = 50;
+
+		public static final double shoulderMotorP = 0.1;
+		public static final double shoulderMotorI = 0.01;
+		public static final double shoulderMotorD = 0;
+		public static final double shoulderMotorF = 0.06;
+		public static final double shoulderMotorIZone = 5000;
+		public static final double shoulderCruiseVelocity = 20000; // Degrees per second
+		public static final double shoulderAccelerationFactor = 25000; // Degrees per second squared
+
+		public static final int elbowMotorID = 51;
+
+		public static final double elbowMotorP = 0.1;
+		public static final double elbowMotorI = 0.001;
+		public static final double elbowMotorD = 0;
+		public static final double elbowMotorF = 0.06;
+		public static final double elbowMotorIZone = 1000;
+		public static final double elbowMaxIntegeralAccumulator = 0;
+		public static final double elbowCruiseVelocity = 15000; // sensorUnitsPer100ms
+		public static final double elbowAccelerationFactor = 25000; // sensorUnitsPer100ms per second
+
+		public static final double upperarmLength = 1.033; // Meters
+		public static final double LimelightCenterToShoulderPivot = 0.13;// Meters
+		public static final double forearmLength = 0.96; // Meters
+
+		public static final double upperarmMass = 0.44639; // Kilograms
+		public static final double forearmMass = 0.293; // Kilograms
+		public static final double elbowMass = 0.95; // Kilograms
+
+		public static final int shoulderCanCoderID = 1;
+		public static final double shoulderAngleActual = 65.5; // Degrees
+		public static final double shoulderAngleSensor = 256.025; // Degrees
+		public static final double shoulderAngleReverseSoftStop = 38; // Degrees
+		public static final double shoulderAngleForwardSoftStop = 130; // Degrees
+
+		public static final int elbowCanCoderID = 2;
+		public static final double elbowAngleActualDifference = -78.8; // Degrees
+		public static final double elbowAngleSensor = 249.170; // Degrees
+		public static final double elbowAngleForwardSoftStop = 90; // Degrees
+		public static final double elbowAngleReverseSoftStop = -160; // Degrees
+
+		public static final int extraSolenoid = 0;
+		public static final int elbowBrakeSolenoid = 1;
+		public static final int shoulderBrakeSolenoid = 2;
+
+		public static final double elbowLockThreshold = 1; // degrees
+		public static final double shoulderLockThreshold = 1; // degrees
+
+		public static final int smoothingFactor = 2; // Arbitrary 1-8
+
+		public static final double ManualAdjustMPS = 0.1; // meters per second
+
+		public static final double allowableError = 10;
+
+		public static final double shoulderGearRatio = 54.0 / 9.0 * 76.0 / 20.0 * 76.0 / 20.0 * 40.0 / 15.0;
+		public static final double shoulderDegreesPerMotorTick = 360.0 / 2048.0 / shoulderGearRatio;
+
+		public static final double elbowGearRatio = 54.0 / 9.0 * 76.0 / 20.0 * 40.0 / 15.0;
+		public static final double elbowVirtualFourBarRatio = 54.0 / 26.0;
+		public static final double elbowDegreesPerMotorTick = 360.0 / 2048.0 / Constants.Arm.elbowGearRatio
+				/ elbowVirtualFourBarRatio;
+
+		public static final double floorHeight = -0.15;
+
+		public static class SetPoint {
+			// Scoring Positions
+			public static final PathPoint cubeHighPosition = new PathPoint(new Translation2d(1.5, 1),
+					Rotation2d.fromDegrees(-30), "cubeHighPosition").withControlLengths(0.5, 0.5);
+			public static final PathPoint coneHighPosition = new PathPoint(new Translation2d(1.44, 1.3),
+					Rotation2d.fromDegrees(-35), "coneHighPosition").withControlLengths(0.75, .75);
+			public static final PathPoint coneHighPositionBad = new PathPoint(new Translation2d(1.39, 1.3),
+					Rotation2d.fromDegrees(-35), "coneHighPosition").withControlLengths(0.75, .75);
+			public static final PathPoint cubeMediumPosition = new PathPoint(new Translation2d(1.067, 0.781),
+					Rotation2d.fromDegrees(-30), "cubeMediumPosition").withControlLengths(0.5, 0.5);
+			public static final PathPoint coneMediumPosition = new PathPoint(new Translation2d(1.042, 0.987),
+					Rotation2d.fromDegrees(-30), "coneMediumPosition").withControlLengths(0.5, 0.5);
+			public static final PathPoint lowPosition = new PathPoint(new Translation2d(0.7, 0.158),
+					Rotation2d.fromDegrees(-90), "lowPosition").withControlLengths(0.25, 0.25);
+
+			// Intaking Positions
+			public static final PathPoint loadingZonePosition = new PathPoint(new Translation2d(0.666, 1.005),
+					Rotation2d.fromDegrees(0), "loadingZonePosition").withControlLengths(0.25, 0.25);
+
+			// private static final Vector2D intakeTweenPosition = new Vector2D(0.59, 0.22);
+
+			public static final PathPoint upIntakePosition = new PathPoint(new Translation2d(0.59, 0.09),
+					Rotation2d.fromDegrees(-90), "upIntakePosition").withControlLengths(0.25, 0.25);
+			public static final PathPoint generalIntakePosition = new PathPoint(new Translation2d(0.59, 0),
+					Rotation2d.fromDegrees(-90), "generalIntakePosition").withControlLengths(0.25, 0.25);
+
+			// Stowing Positions
+			public static final PathPoint stowPosition = new PathPoint(new Translation2d(0.423, 0.324),
+					Rotation2d.fromDegrees(-90), "stowPosition");
+
+			public static final PathPoint startPosition = new PathPoint(new Translation2d(0.27, 0.18),
+					Rotation2d.fromDegrees(-135), "startPosition").withControlLengths(0.25, 0.25);
+			static {
+				for (PathPoint point : List.of(cubeHighPosition, coneHighPosition, cubeMediumPosition,
+						coneMediumPosition, lowPosition, loadingZonePosition, upIntakePosition, generalIntakePosition,
+						stowPosition, startPosition)) {
+					EnumSet<ViolationType> violations = frc.robot.Subsystems.CraneAssembly.Arm.checkArmPointViolation(
+							new Vector2D(point.position),
+							EnumSet.noneOf(frc.robot.Subsystems.CraneAssembly.Arm.ViolationType.class)).violation;
+
+					for (int i = 0; i < 10; i++) {
+						if (!violations.isEmpty()) {
+							DataLogManager
+									.log("###########################SET POINT IMPOSSIBLE###########################");
+							DataLogManager.log(
+									"Set point " + point.name + " is not possible due to " + violations.toString());
+							DriverStation.reportError(
+									"Set point " + point.name + " is not possible due to " + violations.toString(),
+									true);
+						}
+					}
+
+				}
+			}
+		}
+
+	}
+
+	public static class Hand {
+		public static final int mHandSolenoidFwd = 7;
+		public static final int mHandSolenoidRev = 5;
+
+		public static final double handMass = 2.1;
+
+		public static final Utils.Vector2D maxFrameExtension = new Utils.Vector2D((48 + 15 - 5) / 39.37,
+				(78 - 5) / 39.37);
 	}
 
 	public static final class AutoConstants {
