@@ -23,7 +23,7 @@ import frc.robot.Custom.LoggyThings.LoggyThingManager;
 import frc.robot.Subsystems.Drivetrain.Swerve;
 
 public class Robot extends TimedRobot {
-    public chooser chooser;
+    public static chooser chooser;
     public pathPlannerChooser pathPlanner;
     private Command m_autonomousCommand;
     public SendableChooser<String> autonChooser;
@@ -87,7 +87,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousExit() {}
+    public void autonomousExit() {
+        pathPlanner.closeObject();
+    }
 
     @Override
     public void teleopInit() {

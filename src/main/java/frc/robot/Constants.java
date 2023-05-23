@@ -494,6 +494,8 @@ public final class Constants {
 		public static final int RightLimeLightPort = 5800;
 		public static final int LeftLimeLightPort = 5600;
 		public static final int CenterLimeLightPort = 5000;
+
+		public static final double SimPercentOutputMultiplier = 2;
 	}
 
 	public static class Lights {

@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Custom.Utils;
 import frc.robot.Custom.Utils.LockHysteresis;
 import frc.robot.Custom.Utils.Vector2D;
@@ -68,6 +69,9 @@ public class Arm extends SubsystemBase {
     private MechanismRoot2d mMechanismMotorRoot;
     private MechanismLigament2d mMechanismMotorShoulder;
     private MechanismLigament2d mMechanismMotorElbow;
+
+    public double shoulderAngleActual;
+    public double elbowAngleActual;
 
     LockHysteresis mShoulderHysteresis = new LockHysteresis(Constants.Arm.shoulderLockThreshold,
         Constants.Arm.shoulderLockThreshold * 5);
@@ -146,6 +150,9 @@ public class Arm extends SubsystemBase {
 
         mShoulderMotor.setInverted(true);
         mElbowMotor.setInverted(true);
+
+        shoulderAngleActual = calculateArmAngles(new Vector2D(Constants.Arm.SetPoint.startPosition.position)).getShoulder();
+        elbowAngleActual = calculateArmAngles(new Vector2D(Constants.Arm.SetPoint.startPosition.position)).getShoulder();
 
         mShoulderBrakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Arm.shoulderBrakeSolenoid);
         mElbowBrakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Arm.elbowBrakeSolenoid);
@@ -290,8 +297,13 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double shoulderAngleActual = mShoulderCanCoder.getPosition();
-        double elbowAngleActual = mElbowCanCoder.getPosition();
+        if (Robot.isReal()) {
+            shoulderAngleActual = mShoulderCanCoder.getPosition();
+            elbowAngleActual = mElbowCanCoder.getPosition();
+        } else {
+            shoulderAngleActual += mShoulderMotor.get() * Constants.softwareConstants.SimPercentOutputMultiplier;
+            elbowAngleActual += mElbowMotor.get() * Constants.softwareConstants.SimPercentOutputMultiplier;
+        }
 
         Utils.Vector2D shoulderPeakOutputs = new Utils.Vector2D(1.0, 1.0);
         Utils.Vector2D elbowPeakOutputs = new Utils.Vector2D(1.0, 1.0);
@@ -392,14 +404,18 @@ public class Arm extends SubsystemBase {
         // SmartDashboard.putNumber("Target Shoulder Angle", motorAngles.y);
 
         handPos = calculateHandPosition(new Utils.Vector2D(elbowAngleActual, shoulderAngleActual));
-         SmartDashboard.putNumber("Hand/Actual X", handPos.x);
-         SmartDashboard.putNumber("Hand/Actual Y", handPos.y);
-        handPosFromMotors  = calculateHandPosition(new Utils.Vector2D(getElbowPositionFromMotor(), getShoulderPositionFromMotor()));
-         SmartDashboard.putNumber("Hand/Motor X", handPosFromMotors.x);
-         SmartDashboard.putNumber("Hand/Motor Y", handPosFromMotors.y);;
+        SmartDashboard.putNumber("Hand/Actual X", handPos.getElbow());
+        SmartDashboard.putNumber("Hand/Actual Y", handPos.getShoulder());
 
-         SmartDashboard.putNumber("Shoulder/Motor Pos Error", getShoulderPositionFromMotor()-shoulderAngleActual);
-         SmartDashboard.putNumber("Elbow/Motor Pos Error", getElbowPositionFromMotor()-elbowAngleActual);
+        // System.out.println("Hand/Actual X: " + handPos.x);
+        // System.out.println("Hand/Actual Y: " + handPos.y);
+
+        handPosFromMotors  = calculateHandPosition(new Utils.Vector2D(getElbowPositionFromMotor(), getShoulderPositionFromMotor()));
+        SmartDashboard.putNumber("Hand/Motor X", handPosFromMotors.x);
+        SmartDashboard.putNumber("Hand/Motor Y", handPosFromMotors.y);
+
+        SmartDashboard.putNumber("Shoulder/Motor Pos Error", getShoulderPositionFromMotor()-shoulderAngleActual);
+        SmartDashboard.putNumber("Elbow/Motor Pos Error", getElbowPositionFromMotor()-elbowAngleActual);
 
         // SmartDashboard.putNumber("SetPoint Hand X", mCurrentSetpoint.x);
         // SmartDashboard.putNumber("SetPoint Hand Y", mCurrentSetpoint.y);

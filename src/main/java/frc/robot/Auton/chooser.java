@@ -78,4 +78,8 @@ public class chooser extends CommandBase {
     public Trajectory getTrajectory() {
         return trajectory;
     }
+
+    public String getSelected() {
+        return "Use pathPlannerChooser";
+    }
 }

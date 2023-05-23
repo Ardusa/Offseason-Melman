@@ -11,7 +11,7 @@ import frc.robot.Custom.Utils;
 import frc.robot.Subsystems.Drivetrain.Swerve;
 
 
-public class defaultSwerve extends CommandBase {    
+public class TeleopSwerve extends CommandBase {    
     private Swerve mSwerve = Swerve.getInstance();    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
@@ -25,7 +25,7 @@ public class defaultSwerve extends CommandBase {
      * @param rotationSup (DoubleSupplier) Turning angle
      * @param BoB (BooleanSupplier) Decrease speed for sensitive movement
      */
-    public defaultSwerve(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier BoB) {
+    public TeleopSwerve(DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier BoB) {
         addRequirements(mSwerve);
 
         /* Set the param negative could be solution */

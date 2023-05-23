@@ -8,7 +8,8 @@ import frc.robot.Subsystems.Drivetrain.Swerve;
 
 public class balance extends CommandBase {
     private static final Swerve mSwerve = Swerve.getInstance();
-    private static final PIDController balancePID = new PIDController(Constants.Swerve.balancePID.kP, Constants.Swerve.balancePID.kI, Constants.Swerve.balancePID.kD);
+    private static final PIDController balancePID = 
+        new PIDController(Constants.Swerve.balancePID.kP, Constants.Swerve.balancePID.kI, Constants.Swerve.balancePID.kD);
 
     /**
      * Receive input from Gyro and Maintain Robot Pitch at 0

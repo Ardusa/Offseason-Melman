@@ -30,13 +30,34 @@
       "/LiveWindow/Ungrouped/Talon FX [31]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [40]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [41]": "Motor Controller",
+      "/SmartDashboard/ArmCommand": "Subsystem",
+      "/SmartDashboard/ArmMechanism/Actual": "Mechanism2d",
+      "/SmartDashboard/ArmMechanism/Motor": "Mechanism2d",
+      "/SmartDashboard/ArmMechanism/Profile": "Mechanism2d",
+      "/SmartDashboard/ArmMechanism/Target": "Mechanism2d",
       "/SmartDashboard/Autonomous Command": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Pigeon 2 [3]": "Gyro",
       "/SmartDashboard/field": "Field2d",
-      "/SmartDashboard/gyro": "Gyro"
+      "/SmartDashboard/gyro": "Gyro",
+      "/SmartDashboard/sim arm": "Mechanism2d"
     },
     "windows": {
+      "/SmartDashboard/ArmMechanism/Motor": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/ArmMechanism/Profile": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/ArmMechanism/Target": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Autonomous Command": {
         "window": {
           "visible": true
@@ -57,7 +78,7 @@
           "visible": true
         }
       },
-      "/SmartDashboard/gyro": {
+      "/SmartDashboard/sim arm": {
         "window": {
           "visible": true
         }
@@ -89,13 +110,52 @@
         "open": true
       },
       "SmartDashboard": {
-        "Autonomous Command": {
+        "ArmCommand": {
+          "open": true
+        },
+        "ArmMechanism": {
+          "Actual": {
+            "ArmRoot": {
+              "Shoulder": {
+                "Elbow": {
+                  "open": true
+                },
+                "open": true
+              },
+              "open": true
+            },
+            "open": true
+          },
+          "Profile": {
+            "ArmRoot": {
+              "open": true
+            }
+          },
+          "Target": {
+            "ArmRoot": {
+              "open": true
+            },
+            "open": true
+          }
+        },
+        "ArmPlanner": {
+          "endPoint": {
+            "open": true
+          }
+        },
+        "Elbow": {
+          "open": true
+        },
+        "Field": {
+          "open": true
+        },
+        "Hand": {
           "open": true
         },
         "PPSwerveControllerCommand": {
           "open": true
         },
-        "Pigeon 2 [3]": {
+        "Shoulder": {
           "open": true
         },
         "Swerve": {
@@ -104,7 +164,13 @@
           },
           "open": true
         },
-        "swerve": {
+        "open": true,
+        "sim arm": {
+          "ArmRoot": {
+            "Shoulder": {
+              "open": true
+            }
+          },
           "open": true
         }
       }

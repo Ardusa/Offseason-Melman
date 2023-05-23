@@ -362,7 +362,7 @@ public class ArmTrajectoryPlanner {
         MechanismLigament2d mMechanismTargetElbow;
         mMechanismTargetRoot = mMechanismTarget.getRoot("ArmRoot", Constants.Hand.maxFrameExtension.x, 0);
         mMechanismTargetShoulder = mMechanismTargetRoot.append(
-                new MechanismLigament2d("Shoulder", Constants.Arm.upperarmLength, 0, 2, new Color8Bit(Color.kRed)));
+                new MechanismLigament2d("Shoulder", Constants.Arm.upperarmLength, 0, 2, new Color8Bit(Color.kOrange)));
         mMechanismTargetElbow = mMechanismTargetShoulder.append(
                 new MechanismLigament2d("Elbow", Constants.Arm.forearmLength, 0, 2, new Color8Bit(Color.kRed)));
         for (int i = 0; i < timestamps.size(); i++) {

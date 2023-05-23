@@ -10,10 +10,12 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Custom.Utils;
 import frc.robot.Custom.Utils.Vector2D;
 import frc.robot.Custom.Utils.Vector3D;
+import frc.robot.Subsystems.CraneAssembly.Arm;
 
 public class Vision {
 
@@ -260,6 +262,21 @@ public class Vision {
                 mDriverLimelight.putValue("pipeline", NetworkTableValue.makeInteger(0));
             }
         }
+    }
+
+    public Vector2D calculateAndPrintGamePiecePosition() {
+        Vector2D mVector2d = Vision.getInstance().objectPosition();
+
+        double mTargetXFromOrigin = Math.abs(((degSin(90 + mVector2d.y) * Constants.Arm.upperarmLength)
+                / degSin(90 - mVector2d.y - Arm.getInstance().getShoulderPositionFromMotor())));
+        double mTargetY = (mTargetXFromOrigin * degTan(-mVector2d.x)) - 0.08;
+        double mTargetX = mTargetXFromOrigin - (Arm.getInstance().getHandPositionX()) + 0.04;
+
+        // Vector2D mVector2d = Vision.getInstance().objectPosition();
+
+        SmartDashboard.putNumber("Auto Grab/Target/X", mTargetX);
+        SmartDashboard.putNumber("Auto Grab/Target/Y", mTargetY);
+        return new Vector2D(mTargetX, mTargetY);
     }
 
     public double degSin(double value) {
