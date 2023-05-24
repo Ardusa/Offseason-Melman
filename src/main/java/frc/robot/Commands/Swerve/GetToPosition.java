@@ -44,8 +44,8 @@ public class GetToPosition extends CommandBase {
         if(mHoldingCone) {
             setPosition=new Utils.Vector3D(1.79, kConePositions.get(0), 180);
             if(kConePositions.get(kConePositions.size() - 1) < currentPos.getY()) {
-                if(currentPos.getX() > Constants.fieldLength/2) {
-                    setPosition = new Utils.Vector3D(Constants.fieldLength - 1.79,kConePositions.get(kConePositions.size() -1),  0);
+                if(currentPos.getX() > Constants.fieldConstants.field.getX()/2) {
+                    setPosition = new Utils.Vector3D(Constants.fieldConstants.field.getX() - 1.79,kConePositions.get(kConePositions.size() -1),  0);
                 } else {
                     setPosition = new Utils.Vector3D(1.79,kConePositions.get(kConePositions.size() -1), 180);
                 }
@@ -54,14 +54,14 @@ public class GetToPosition extends CommandBase {
             for(int i = 1; i < kConePositions.size(); i++) {
                 if(kConePositions.get(i-1) <= currentPos.getY() && kConePositions.get(i) >= currentPos.getY()) {
                     if((kConePositions.get(i-1) - currentPos.getY()) <= (kConePositions.get(i) - currentPos.getY())) {
-                        if(currentPos.getX() > Constants.fieldLength/2) {
-                            setPosition = new Utils.Vector3D(Constants.fieldLength - 1.79, kConePositions.get(i-1), 0);
+                        if(currentPos.getX() > Constants.fieldConstants.field.getX()/2) {
+                            setPosition = new Utils.Vector3D(Constants.fieldConstants.field.getX() - 1.79, kConePositions.get(i-1), 0);
                         } else {
                             setPosition = new Utils.Vector3D(1.79,kConePositions.get(i-1), 180);
                         }
                     } else {
-                        if(currentPos.getX() > Constants.fieldLength/2) {
-                            setPosition = new Utils.Vector3D(Constants.fieldLength - 1.79,kConePositions.get(i),  0);
+                        if(currentPos.getX() > Constants.fieldConstants.field.getX()/2) {
+                            setPosition = new Utils.Vector3D(Constants.fieldConstants.field.getX() - 1.79,kConePositions.get(i),  0);
                         } else {
                             setPosition = new Utils.Vector3D( 1.79, kConePositions.get(i),180);
                         }
@@ -72,8 +72,8 @@ public class GetToPosition extends CommandBase {
             for(int i = 1; i < kCubePositions.size(); i++) {
                 setPosition=new Utils.Vector3D(1.79, kCubePositions.get(0), 0);
                 if(kCubePositions.get(kCubePositions.size() - 1) < currentPos.getY()) {
-                    if(currentPos.getX() > Constants.fieldLength/2) {
-                        setPosition = new Utils.Vector3D(Constants.fieldLength - 1.79,kCubePositions.get(kCubePositions.size() -1),  0);
+                    if(currentPos.getX() > Constants.fieldConstants.field.getX()/2) {
+                        setPosition = new Utils.Vector3D(Constants.fieldConstants.field.getX() - 1.79,kCubePositions.get(kCubePositions.size() -1),  0);
                     } else {
                         setPosition = new Utils.Vector3D(1.79,kCubePositions.get(kCubePositions.size() -1), 180);
                     }
@@ -81,14 +81,14 @@ public class GetToPosition extends CommandBase {
 
                 if(kCubePositions.get(i-1) <= currentPos.getY() && kCubePositions.get(i) >= currentPos.getY()) {
                     if((kCubePositions.get(i-1) - currentPos.getY()) <= (kCubePositions.get(i) - currentPos.getY())) {
-                        if(currentPos.getX() > Constants.fieldLength/2) {
-                            setPosition = new Utils.Vector3D(Constants.fieldLength - 1.79,kCubePositions.get(i-1),  0);
+                        if(currentPos.getX() > Constants.fieldConstants.field.getX()/2) {
+                            setPosition = new Utils.Vector3D(Constants.fieldConstants.field.getX() - 1.79,kCubePositions.get(i-1),  0);
                         } else {
                             setPosition = new Utils.Vector3D( 1.79,kCubePositions.get(i-1), 180);
                         }
                     } else {
-                        if(currentPos.getX() > Constants.fieldLength/2) {
-                            setPosition = new Utils.Vector3D( Constants.fieldLength - 1.79,kCubePositions.get(i), 0);
+                        if(currentPos.getX() > Constants.fieldConstants.field.getX()/2) {
+                            setPosition = new Utils.Vector3D( Constants.fieldConstants.field.getX() - 1.79,kCubePositions.get(i), 0);
                         } else {
                             setPosition = new Utils.Vector3D( 1.79,kCubePositions.get(i), 180);
                         }

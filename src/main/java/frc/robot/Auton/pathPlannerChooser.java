@@ -30,7 +30,7 @@ public class pathPlannerChooser {
     private double posesPerTrajectory;
     private List<Pose2d> pathPoses = new ArrayList<>();
 
-    HashMap<String, Command> eventMap1 = new HashMap<String, Command>();
+    private HashMap<String, Command> eventMap1 = new HashMap<String, Command>();
 
     /** Do not include file extensions: .exe, .json, .path */
     public pathPlannerChooser(String path) {
@@ -41,8 +41,8 @@ public class pathPlannerChooser {
             pathPlannerTrajectory = PathPlanner.loadPath(
                     path,
                     PathPlanner.getConstraintsFromPath(path));
-            pathPlannerTrajectory = PathPlannerTrajectory.transformTrajectoryForAlliance(pathPlannerTrajectory,
-                    DriverStation.getAlliance());
+            pathPlannerTrajectory = PathPlannerTrajectory.transformTrajectoryForAlliance(pathPlannerTrajectory, DriverStation.getAlliance());
+            
             mSwerve.resetOdometry(pathPlannerTrajectory.getInitialHolonomicPose());
             autonPoses();
         }

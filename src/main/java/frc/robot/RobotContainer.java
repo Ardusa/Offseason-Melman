@@ -13,6 +13,7 @@ import frc.robot.Commands.CraneCommands.Arm.ProfiledChangeSetPoint;
 import frc.robot.Commands.CraneCommands.Hand.SetGrip;
 import frc.robot.Commands.CraneCommands.Lights.LightCMD;
 import frc.robot.Commands.CraneCommands.Lights.LightReqCMD;
+import frc.robot.Commands.Swerve.AutoPilot;
 import frc.robot.Commands.Swerve.GetToPosition;
 import frc.robot.Commands.Swerve.balance;
 import frc.robot.Commands.Teleop.FineAdjust;
@@ -148,7 +149,8 @@ public class RobotContainer {
 
     new JoystickButton(keyboard, 2).onTrue(new InstantCommand(() -> mSwerve.robotCentricSup = !mSwerve.robotCentricSup))
         .debounce(Constants.OperatorConstants.Debounce.kButton);
-    new JoystickButton(keyboard, 3).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve))
+    // new JoystickButton(keyboard, 3).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve))
+    new JoystickButton(keyboard, 3).onTrue(new AutoPilot().generatePath())
         .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(keyboard, 4).onTrue(new InstantCommand(mSwerve::lock, mSwerve))
         .debounce(Constants.OperatorConstants.Debounce.kButton);

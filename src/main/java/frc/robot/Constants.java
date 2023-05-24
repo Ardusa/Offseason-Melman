@@ -39,8 +39,13 @@ public final class Constants {
 
 	public static final double stickDeadband = 0.1;
 
-	public static final double fieldLength = 16.54;
-	public static final double fieldWidth = 8.02;
+	public static final class fieldConstants {
+		/** X for Length, Y for Width */
+		public static final Translation2d field = new Translation2d(16.54, 8.02);
+
+		public static final Pose2d BlueChargePad = new Pose2d(new Translation2d(2, 2), Rotation2d.fromDegrees(0));
+		// public static final 
+	}
 
 	public static final class Swerve {
 		public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
