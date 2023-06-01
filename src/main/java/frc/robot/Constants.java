@@ -80,16 +80,18 @@ public final class Constants {
 				Mod3.config
 		};
 
-		public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
-				Constants.Swerve.swerveConfigs,
-				Constants.Swerve.SwerveIMU,
-				Constants.Swerve.maxSpeed,
-				Constants.Swerve.invertedIMU);
-
 		public static final int Pigeon2_ID = 3;
 
 		public static final SwerveIMU SwerveIMU = new Pigeon2Swerve(Pigeon2_ID);
 		public static final boolean invertedIMU = false;
+
+		public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
+				Constants.Swerve.swerveConfigs,
+				Constants.Swerve.SwerveIMU,
+				Constants.Swerve.maxSpeed,
+				Constants.Swerve.invertedIMU
+		);
+
 
 		/* Module Gear Ratios */
 		public static final double driveGearRatio = chosenModule.driveGearRatio;

@@ -54,7 +54,7 @@ public class Swerve extends SubsystemBase {
                 Constants.Swerve.SwerveConfig,
                 new SwerveControllerConfiguration(
                     Constants.Swerve.SwerveConfig,
-                    new PIDFConfig(0.118, 0, 0) //Copied from BroncBotz json config
+                    new PIDFConfig(0.1, 0, 0) //Copied from BroncBotz json config
                 )
             );
         }
