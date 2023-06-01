@@ -86,10 +86,10 @@ public final class Constants {
 		public static final boolean invertedIMU = false;
 
 		public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
-				Constants.Swerve.swerveConfigs,
-				Constants.Swerve.SwerveIMU,
-				Constants.Swerve.maxSpeed,
-				Constants.Swerve.invertedIMU
+			Constants.Swerve.swerveConfigs,
+			Constants.Swerve.SwerveIMU,
+			Constants.Swerve.maxSpeed,
+			Constants.Swerve.invertedIMU
 		);
 
 
