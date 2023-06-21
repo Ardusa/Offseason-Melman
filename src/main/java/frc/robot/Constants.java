@@ -106,14 +106,15 @@ public final class Constants {
 
         /* Module Specific Constants */
 
-        // TODO: Switched Mod Constants, redo Falcon IDs
+
+        // Numbering system for drivetrain: 0 - front left, 1 - front right, 2 - back left, 3 - back right
 
         /* Front Left Module - Module 0 */
         public static final class Mod0 {
             public static final int driveMotorID = 20;
             public static final int angleMotorID = 21;
             public static final int canCoderID = 22;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.40);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(52.07);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -123,7 +124,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 10;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(27.246);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -133,7 +134,7 @@ public final class Constants {
             public static final int driveMotorID = 30;
             public static final int angleMotorID = 31;
             public static final int canCoderID = 32;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(102.537 );
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(193.184);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -143,7 +144,7 @@ public final class Constants {
             public static final int driveMotorID = 40;
             public static final int angleMotorID = 41;
             public static final int canCoderID = 42;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(95.086);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(185.801);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
