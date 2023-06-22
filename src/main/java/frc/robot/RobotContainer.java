@@ -20,9 +20,9 @@ public class RobotContainer {
     /* Default Commands */
     mSwerve.setDefaultCommand(
       new defaultSwerve(
-        () -> -xDrive.getLeftX(),
+        () -> xDrive.getLeftX(),
         () -> -xDrive.getLeftY(),
-        () -> -xDrive.getRightX(),
+        () -> xDrive.getRightX(),
         xDrive::getStartButton,
         xDrive::getRightBumper
     ));
