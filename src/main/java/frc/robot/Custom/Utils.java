@@ -2,6 +2,7 @@ package frc.robot.Custom;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.Constants;
+import frc.robot.ConstantsOld;
 
 public class Utils {
     public static class Vector3D {
@@ -584,8 +585,8 @@ public class Utils {
     }
 
     public static boolean withinRange(Vector2D v, Vector2D current) {
-        if(v.x >= current.x - Constants.Swerve.kRange && v.x <= current.x + Constants.Swerve.kRange) {
-            if(v.y >= current.y - Constants.Swerve.kRange && v.y <= current.y + Constants.Swerve.kRange) {
+        if(v.x >= current.x - ConstantsOld.Swerve.kRange && v.x <= current.x + ConstantsOld.Swerve.kRange) {
+            if(v.y >= current.y - ConstantsOld.Swerve.kRange && v.y <= current.y + ConstantsOld.Swerve.kRange) {
                 return true;
             }
         }
@@ -593,12 +594,12 @@ public class Utils {
     }
 
     public static double customDeadzone(double input) {
-        if(Math.abs(input) >= Constants.OperatorConstants.CustomDeadzone.kLowerLimitExpFunc && Math.abs(input) < Constants.OperatorConstants.CustomDeadzone.kUpperLimitExpFunc) {
-            return Math.signum(input) * ((Constants.OperatorConstants.CustomDeadzone.kExpFuncMult) * Math.pow((Constants.OperatorConstants.CustomDeadzone.kExpFuncBase), Math.abs(input)) - Constants.OperatorConstants.CustomDeadzone.kExpFuncConstant); 
-        } else if(Math.abs(input) >= Constants.OperatorConstants.CustomDeadzone.kUpperLimitExpFunc && Math.abs(input) <= Constants.OperatorConstants.CustomDeadzone.kUpperLimitLinFunc) {
-            return Math.signum(input) * ((Constants.OperatorConstants.CustomDeadzone.kLinFuncMult) * (Math.abs(input) - Constants.OperatorConstants.CustomDeadzone.kLinFuncOffset) + (Constants.OperatorConstants.CustomDeadzone.kLinFuncConstant));
+        if(Math.abs(input) >= ConstantsOld.OperatorConstants.CustomDeadzone.kLowerLimitExpFunc && Math.abs(input) < ConstantsOld.OperatorConstants.CustomDeadzone.kUpperLimitExpFunc) {
+            return Math.signum(input) * ((ConstantsOld.OperatorConstants.CustomDeadzone.kExpFuncMult) * Math.pow((ConstantsOld.OperatorConstants.CustomDeadzone.kExpFuncBase), Math.abs(input)) - ConstantsOld.OperatorConstants.CustomDeadzone.kExpFuncConstant); 
+        } else if(Math.abs(input) >= ConstantsOld.OperatorConstants.CustomDeadzone.kUpperLimitExpFunc && Math.abs(input) <= ConstantsOld.OperatorConstants.CustomDeadzone.kUpperLimitLinFunc) {
+            return Math.signum(input) * ((ConstantsOld.OperatorConstants.CustomDeadzone.kLinFuncMult) * (Math.abs(input) - ConstantsOld.OperatorConstants.CustomDeadzone.kLinFuncOffset) + (ConstantsOld.OperatorConstants.CustomDeadzone.kLinFuncConstant));
         }
-        return Constants.OperatorConstants.CustomDeadzone.kNoSpeed;
+        return ConstantsOld.OperatorConstants.CustomDeadzone.kNoSpeed;
     }
 
     public static class LockHysteresis {
