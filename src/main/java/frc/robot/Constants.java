@@ -17,19 +17,35 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static class OperatorConstants {
-        public static final int kDriverControllerPort = 0;
+    // Drivetrain Constants
+    public static final int drivetrainLeftMotorMaster_ID = 4;
+    public static final int drivetrainLeftMotorSlave_ID = 2;
+    public static final int drivetrainRightMotorMaster_ID = 3;
+    public static final int drivetrainRightMotorSlave_ID = 1;
+    public static final double DRIVETRAIN_MOD_LEFT = 0.78;
+    public static final double DRIVETRAIN_MOD_RIGHT = 1;
+    public static final double DRIVETRAIN_MOD_RIGHT_B = 0.7;
+    // Intake Constants
+    public static final int intakeLeftMotor_ID = 5;
+    public static final int intakeRightMotor_ID = 6;
+    public static final int intakeLeftMotorArm_ID = 0;
+    public static final int intakeRightMotorArm_ID = 0;
+    public static final double INTAKE_MOD = 1;
+    public static final double INTAKE_SPEED = 0.5;
+    // Crane Constants
+    public static final int craneMotor_ID = 0;
+    public static final int craneMotorEncoder_ID = 0;
+    // Elevator Constants
+    public static final int elevatorHorizontalMotor_ID = 7;
+    public static final int elevatorVerticalMotor_ID = 8;
+    public static final int elevatorMotorEncoder_ID = 0;
+    public static final double CMD_ELEVATOR_EXTEND_MOD = 1;
+    public static final double CMD_ELEVATOR_X_MOD = 1;
+    public static final double CMD_ELEVATOR_Y_MOD = 1;
+    public static final double ELEVATOR_SPEED = 0.5;
 
-        public static final int leftMotor1_ID = 1;
-        public static final int leftMotor2_ID = 2;
-        public static final int rightMotor1_ID = 3;
-        public static final int rightMotor2_ID = 4;
+    public static final double MAN_ELEVATOR_EXTEND_MOD = 1;
+    public static final double MAN_ELEVATOR_X_MOD = 1;
+    public static final double MAN_ELEVATOR_Y_MOD = 1;
 
-        public static final int intakeMotor_ID = 5;
-        public static final double intakeMotorOnSpeed = 0.8;
-
-        public static final int shooterMotor_ID = 6;
-        public static final double shooterMotorOnSpeed = 0.8;
-
-    }
 }
