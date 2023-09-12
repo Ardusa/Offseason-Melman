@@ -16,8 +16,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.Lights;
 import frc.robot.Auton.chooser;
 import frc.robot.Auton.pathPlannerChooser;
+import frc.robot.Commands.CraneCommands.Lights.LightCMD;
 import frc.robot.Custom.CTREConfigs;
 import frc.robot.Custom.LoggyThings.LoggyThingManager;
 import frc.robot.Subsystems.Drivetrain.Swerve;
@@ -66,6 +68,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        new InstantCommand(() -> Swerve.getInstance().lock(), Swerve.getInstance());
+        new InstantCommand(() -> Swerve.getInstance().setGyro(180), Swerve.getInstance());
+        // Swerve.getInstance().setGyro(180);
+        // Swerve.getInstance().lock();
+        new LightCMD(Lights.kRobostangs).schedule();
+
         // chooser = new chooser(autonChooser.getSelected());
         // m_autonomousCommand = chooser.generateTrajectory();
 
@@ -93,6 +101,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        new LightCMD(Lights.kFireTwinkle).schedule();
+
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }

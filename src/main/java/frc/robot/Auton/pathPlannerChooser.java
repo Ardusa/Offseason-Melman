@@ -65,9 +65,11 @@ public class pathPlannerChooser {
                             new PIDController(8, 0, 0),
                             new PIDController(1, 0, 0),
                             mSwerve::setChassisSpeeds,
-                            mSwerve),
+                            mSwerve
+                    ),
                     pathPlannerTrajectory.getMarkers(),
-                    eventMap1);
+                eventMap1
+            );
         }
     }
 

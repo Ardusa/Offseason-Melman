@@ -158,18 +158,17 @@ public final class Constants {
 		public static final double targetOffset = 0;
 		/* Module Specific Constants */
 
-		// TODO: Switched Mod Constants, redo Falcon IDs
-
 		/* Front Left Module - Module 0 */
 		public static final class Mod0 {
-			public static final int driveMotorID = 20;
-			public static final int angleMotorID = 21;
-			public static final int canCoderID = 22;
+			public static final int driveMotorID = 21;
+			public static final int angleMotorID = 22;
+			public static final int canCoderID = 20;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.40);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
-			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+			public static final SwerveModuleConfiguration config =
+				new SwerveModuleConfiguration(
 					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
 					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
 					new CANCoderSwerve(canCoderID),
@@ -187,20 +186,23 @@ public final class Constants {
 							openLoopRamp,
 							openLoopRamp,
 							2048,
-							2048),
-					"FrontLeft");
+							2048
+					),
+					"FrontLeft"
+				);
 		}
 
 		/* Front Right Module - Module 1 */
 		public static final class Mod1 {
-			public static final int driveMotorID = 11;
-			public static final int angleMotorID = 10;
-			public static final int canCoderID = 12;
+            public static final int driveMotorID = 11;
+            public static final int angleMotorID = 12;
+            public static final int canCoderID = 10;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
-			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+			public static final SwerveModuleConfiguration config =
+				new SwerveModuleConfiguration(
 					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
 					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
 					new CANCoderSwerve(canCoderID),
@@ -218,20 +220,23 @@ public final class Constants {
 							openLoopRamp,
 							openLoopRamp,
 							2048,
-							2048),
-					"FrontRight");
+							2048
+					),
+					"FrontRight"
+				);
 		}
 
 		/* Back Left Module - Module 2 */
 		public static final class Mod2 {
-			public static final int driveMotorID = 30;
-			public static final int angleMotorID = 31;
-			public static final int canCoderID = 32;
+			public static final int driveMotorID = 31;
+			public static final int angleMotorID = 32;
+			public static final int canCoderID = 30;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(102.537);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
-			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+			public static final SwerveModuleConfiguration config =
+				new SwerveModuleConfiguration(
 					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
 					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
 					new CANCoderSwerve(canCoderID),
@@ -249,20 +254,23 @@ public final class Constants {
 							openLoopRamp,
 							openLoopRamp,
 							2048,
-							2048),
-					"BackLeft");
+							2048
+					),
+					"BackLeft"
+				);
 		}
 
 		/* Back Right Module - Module 3 */
 		public static final class Mod3 {
-			public static final int driveMotorID = 40;
-			public static final int angleMotorID = 41;
-			public static final int canCoderID = 42;
+			public static final int driveMotorID = 41;
+			public static final int angleMotorID = 42;
+			public static final int canCoderID = 40;
 			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(95.086);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
-			public static final SwerveModuleConfiguration config = new SwerveModuleConfiguration(
+			public static final SwerveModuleConfiguration config =
+				new SwerveModuleConfiguration(
 					new TalonFXSwerve(new WPI_TalonFX(driveMotorID), true),
 					new TalonFXSwerve(new WPI_TalonFX(angleMotorID), false),
 					new CANCoderSwerve(canCoderID),
@@ -280,8 +288,10 @@ public final class Constants {
 							openLoopRamp,
 							openLoopRamp,
 							2048,
-							2048),
-					"BackRight");
+							2048
+					),
+					"BackRight"
+				);
 		}
 
 		public static final class balancePID {
@@ -381,28 +391,30 @@ public final class Constants {
 
 		public static class SetPoint {
 			// Scoring Positions
-			public static final PathPoint cubeHighPosition = new PathPoint(new Translation2d(1.5, 1),
+			public static final PathPoint cubeHighPosition = new PathPoint(new Translation2d(1.5, 1.1),
 					Rotation2d.fromDegrees(-30), "cubeHighPosition").withControlLengths(0.5, 0.5);
-			public static final PathPoint coneHighPosition = new PathPoint(new Translation2d(1.44, 1.3),
+			public static final PathPoint cubeMediumPosition = new PathPoint(new Translation2d(1.067, 0.781),
+					Rotation2d.fromDegrees(-30), "cubeMediumPosition").withControlLengths(0.5, 0.5);
+
+			public static final PathPoint coneHighPosition = new PathPoint(new Translation2d(1.44, 1.2),
 					Rotation2d.fromDegrees(-35), "coneHighPosition").withControlLengths(0.75, .75);
 			public static final PathPoint coneHighPositionBad = new PathPoint(new Translation2d(1.39, 1.3),
 					Rotation2d.fromDegrees(-35), "coneHighPosition").withControlLengths(0.75, .75);
-			public static final PathPoint cubeMediumPosition = new PathPoint(new Translation2d(1.067, 0.781),
-					Rotation2d.fromDegrees(-30), "cubeMediumPosition").withControlLengths(0.5, 0.5);
-			public static final PathPoint coneMediumPosition = new PathPoint(new Translation2d(1.042, 0.987),
+			public static final PathPoint coneMediumPosition = new PathPoint(new Translation2d(1.042, 0.96),
 					Rotation2d.fromDegrees(-30), "coneMediumPosition").withControlLengths(0.5, 0.5);
-			public static final PathPoint lowPosition = new PathPoint(new Translation2d(0.7, 0.158),
+
+			public static final PathPoint lowPosition = new PathPoint(new Translation2d(0.63, 0.158),
 					Rotation2d.fromDegrees(-90), "lowPosition").withControlLengths(0.25, 0.25);
 
 			// Intaking Positions
-			public static final PathPoint loadingZonePosition = new PathPoint(new Translation2d(0.666, 1.005),
-					Rotation2d.fromDegrees(0), "loadingZonePosition").withControlLengths(0.25, 0.25);
+			public static final PathPoint loadingZonePosition = new PathPoint(new Translation2d(0.636, 1.005),
+					Rotation2d.fromDegrees(-60), "loadingZonePosition").withControlLengths(0.25, 0.25);
 
 			// private static final Vector2D intakeTweenPosition = new Vector2D(0.59, 0.22);
 
-			public static final PathPoint upIntakePosition = new PathPoint(new Translation2d(0.59, 0.09),
+			public static final PathPoint upIntakePosition = new PathPoint(new Translation2d(0.59, 0.05),
 					Rotation2d.fromDegrees(-90), "upIntakePosition").withControlLengths(0.25, 0.25);
-			public static final PathPoint generalIntakePosition = new PathPoint(new Translation2d(0.59, 0),
+			public static final PathPoint generalIntakePosition = new PathPoint(new Translation2d(0.665, -0.07),
 					Rotation2d.fromDegrees(-90), "generalIntakePosition").withControlLengths(0.25, 0.25);
 
 			// Stowing Positions

@@ -11,16 +11,16 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Custom.SwerveDrive.SwerveDrive;
+import frc.robot.Custom.SwerveDrive.SwerveParser;
 
 import java.io.File;
 
 import swervelib.SwerveController;
-import swervelib.SwerveDrive;
 import swervelib.math.SwerveKinematics2;
 import swervelib.parser.PIDFConfig;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
-import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
@@ -159,6 +159,10 @@ public class Swerve extends SubsystemBase {
      */
     public void zeroGyro() {
         swerveDrive.zeroGyro();
+    }
+
+    public void setGyro(double rotation) {
+        swerveDrive.setGyro(rotation);
     }
 
     /**
