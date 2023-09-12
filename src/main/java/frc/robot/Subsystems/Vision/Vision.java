@@ -80,14 +80,21 @@ public class Vision {
     }
 
     public Utils.Vector3D getPosition(LimelightState Limelight) {
-        // TODO: If targetVisible is returning properly then use switch-case instead of if-else statements
-        if (Limelight.compareTo(LimelightState.leftLimelight) == 0) {
-            return fromAT(mLeftPosition);
-        } else if (Limelight.compareTo(LimelightState.rightLimelight) == 0) {
-            return fromAT(mRightPosition);
-        } else {
-            return new Utils.Vector3D(0, 0, 0);
+        switch (Limelight) {
+            case leftLimelight:
+                return fromAT(mLeftPosition);
+            case rightLimelight:
+                return fromAT(mRightPosition);
+            default:
+                return new Utils.Vector3D(0, 0, 0);
         }
+        // if (Limelight.compareTo(LimelightState.leftLimelight) == 0) {
+        //     return fromAT(mLeftPosition);
+        // } else if (Limelight.compareTo(LimelightState.rightLimelight) == 0) {
+        //     return fromAT(mRightPosition);
+        // } else {
+        //     return new Utils.Vector3D(0, 0, 0);
+        // }
     }
 
     public void takeSnapshotDriver() {
@@ -95,13 +102,22 @@ public class Vision {
     }
 
     public Rotation2d getRotation(LimelightState Limelight) {
-        if (Limelight.compareTo(LimelightState.leftLimelight) == 0) {
-            return rotFromAT(mLeftPosition);
-        } else if (Limelight.compareTo(LimelightState.rightLimelight) == 0) {
-            return rotFromAT(mRightPosition);
-        } else {
-            return new Rotation2d();
+        switch (Limelight) {
+            case leftLimelight:
+                return rotFromAT(mLeftPosition);
+            case rightLimelight:
+                return rotFromAT(mRightPosition);
+            default:
+                return new Rotation2d();
         }
+
+        // if (Limelight.compareTo(LimelightState.leftLimelight) == 0) {
+        //     return rotFromAT(mLeftPosition);
+        // } else if (Limelight.compareTo(LimelightState.rightLimelight) == 0) {
+        //     return rotFromAT(mRightPosition);
+        // } else {
+        //     return new Rotation2d();
+        // }
     }
 
     public void switchPipelinesDrivetrain() {

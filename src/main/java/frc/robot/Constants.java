@@ -177,7 +177,7 @@ public final class Constants {
 					trackWidth / 2,
 					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
 							chosenModule.angleKF),
-					new PIDFConfig(driveKP, driveKI, driveKD, driveKF), //TODO: Velocity PIDF values
+					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
@@ -211,7 +211,7 @@ public final class Constants {
 					-trackWidth / 2,
 					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
 							chosenModule.angleKF),
-					new PIDFConfig(0, 0), //TODO: Velocity PIDF values
+					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
@@ -245,7 +245,7 @@ public final class Constants {
 					trackWidth / 2,
 					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
 							chosenModule.angleKF),
-					new PIDFConfig(0, 0), //TODO: Velocity PIDF values
+					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
@@ -279,7 +279,7 @@ public final class Constants {
 					-trackWidth / 2,
 					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
 							chosenModule.angleKF),
-					new PIDFConfig(0, 0), //TODO: Velocity PIDF values
+					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
