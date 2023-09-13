@@ -101,6 +101,7 @@ public class Swerve extends SubsystemBase {
      */
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         swerveDrive.drive(translation, rotation, fieldRelative, isOpenLoop);
+        startTab();
     }
 
     @Override
@@ -110,6 +111,11 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
+    }
+
+    private void startTab() {
+        Constants.swerveLayout.add("Field", swerveDrive.field);
+        Constants.swerveLayout.addBoolean("AutoBalance", () -> (mInstance.getCurrentCommand().toString() == "Balance"));
     }
 
     /**

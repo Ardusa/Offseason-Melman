@@ -10,6 +10,7 @@ import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,8 @@ public class Robot extends TimedRobot {
         // autonChooser.addOption("Coop No Bump", "CoopertitionNoBump.json");
         autonChooser.addOption("Place and Charge Path", "1pieceAndCharge");
         SmartDashboard.putData("Autonomous Command", autonChooser);
+        
+        Constants.tab.add("Auton Chooser", autonChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withSize(2, 1);
 
         CommandScheduler.getInstance().onCommandInitialize((Command c) -> {DataLogManager.log("INITIALIZED: " + c.getName());});
         CommandScheduler.getInstance().onCommandFinish((Command c) -> {DataLogManager.log("FINISHED: " + c.getName());});

@@ -1,7 +1,11 @@
 package frc.robot.Subsystems.CraneAssembly;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,11 +17,24 @@ public class Hand extends SubsystemBase {
     public boolean holdingCone = true;
     public boolean gripping = false;
 
+    Map<String, Object> properties = new HashMap<>();
+
     public static Hand getInstance() {
         if(mInstance == null) {
             mInstance = new Hand();
         }
         return mInstance;
+    }
+
+    public Hand() {
+        startTab();
+    }
+
+    private void startTab() {
+        properties.put("ColorWhenTrue", "#E9E200");
+        properties.put("ColorWhenFalse", "#FE00AA");
+        Constants.everythingElseLayout.addBoolean("Cone or Cube", () -> holdingCone).withWidget(BuiltInWidgets.kBooleanBox)
+                .withProperties(properties);
     }
 
     public void periodic() {
@@ -27,13 +44,7 @@ public class Hand extends SubsystemBase {
             mSolenoid.set(DoubleSolenoid.Value.kReverse);
         }
         SmartDashboard.putBoolean("/Hand/Gripping", gripping);
-        SmartDashboard.putBoolean("/Hand/HoldingCone", holdingCone);
-        
-        if(holdingCone) {
-        } else {
-        }
-
-        
+        SmartDashboard.putBoolean("/Hand/HoldingCone", holdingCone);        
     }
 
     public void setGripping(boolean g) {

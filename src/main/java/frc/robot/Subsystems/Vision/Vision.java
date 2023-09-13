@@ -11,13 +11,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Custom.Utils;
 import frc.robot.Custom.Utils.Vector2D;
 import frc.robot.Custom.Utils.Vector3D;
 import frc.robot.Subsystems.CraneAssembly.Arm;
 
-public class Vision {
+public class Vision extends SubsystemBase {
 
     private static Vision Instance;
     private double value;
@@ -52,6 +53,14 @@ public class Vision {
             Instance = new Vision();
         }
         return Instance;
+    }
+
+    public Vision() {
+        startTab();
+    }
+
+    private void startTab() {
+        Constants.tab.addCamera("Camera", "DriverCam", "10.5.48.2:5800");
     }
 
     public boolean targetVisible(LimelightState limelight) {
@@ -305,5 +314,9 @@ public class Vision {
 
     public double degTan(double value) {
         return Math.tan(Math.toRadians(value));
+    }
+
+    public int getAprilTagID() {
+        return (int) SmartDashboard.getNumber("tid", 0.0);
     }
 }

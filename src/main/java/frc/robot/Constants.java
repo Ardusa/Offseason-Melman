@@ -17,6 +17,10 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Custom.Utils;
 import frc.robot.Custom.PathPlanner.PathPoint;
 import frc.robot.Custom.Utils.Vector2D;
@@ -36,6 +40,10 @@ import swervelib.parser.SwerveModulePhysicalCharacteristics;
 //0.42545 + 0.254/2
 
 public final class Constants {
+
+	public static final ShuffleboardTab tab = Shuffleboard.getTab("Main Tab");
+	public static final ShuffleboardLayout swerveLayout = tab.getLayout("Swerve", BuiltInLayouts.kList);
+	public static final ShuffleboardLayout everythingElseLayout = tab.getLayout("Signals", BuiltInLayouts.kList);
 
 	public static final double stickDeadband = 0.1;
 

@@ -10,6 +10,7 @@ public class SetHolding extends InstantCommand{
     private Hand mHand = Hand.getInstance();
     private XboxController xManip = RobotContainer.xManip;
     private Boolean holding;
+    
     /**
      * @deprecated
      * Use {@link ToggleHolding} instead
@@ -24,9 +25,9 @@ public class SetHolding extends InstantCommand{
         mHand.setHolding(holding);
 
         if(holding) {
-            xManip.setRumble(RumbleType.kLeftRumble, 0.25);
+            xManip.setRumble(RumbleType.kLeftRumble, 0.2);
         } else {
-            xManip.setRumble(RumbleType.kRightRumble, 0.25);
+            xManip.setRumble(RumbleType.kRightRumble, 0.8);
         }
     }
     
