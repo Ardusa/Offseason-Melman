@@ -132,16 +132,17 @@ public final class Constants {
 		public static final double closedLoopRamp = 0.0;
 
 		/* Angle Motor PID Values */
-		public static final double angleKP = chosenModule.angleKP;
-		public static final double angleKI = chosenModule.angleKI;
-		public static final double angleKD = chosenModule.angleKD;
-		public static final double angleKF = chosenModule.angleKF;
+		public static final double anglekP = 0.1; // 0.3  kP is for proportional amounts, so like the output is just a scaled value of the input, which is the error. So if error is 100 degrees, kP=0.3 will say to move the wheel 30% speed
+		public static final double anglekI = 0;   //0.0   kI is the little push, meaning if it is very close to the setpoint, than this value will determine how much of a push to give. The higher the value, if too high, it will oscilate, if too low, it will take forever to reach the setpoint
+		public static final double anglekD = 0;   //0.0   kD is the deciding factor for the rate of increasing the speed, so if kD is higher, the curve will flatten more, and the lower the effect, the more steep the curve.
+		public static final double anglekF = 0;   //0.0   idk what this means
+    public static final double anglekIZone = 0; //The zone that determines when the kI will start meaning something, must be large enough that the kP and kD can reach it, but must be small enough to not pick up unesscary values.
 
 		/* Drive Motor PID Values */
-		public static final double driveKP = 0.05;
-		public static final double driveKI = 0.0;
-		public static final double driveKD = 0.0;
-		public static final double driveKF = 0.0;
+		public static final double drivekP = 0.05;
+		public static final double drivekI = 0.0;
+		public static final double drivekD = 0.0;
+		public static final double drivekF = 0.0;
 
 		/*
 		 * Drive Motor Characterization Values
@@ -183,9 +184,8 @@ public final class Constants {
 					angleOffset.getDegrees(),
 					wheelBase / 2,
 					trackWidth / 2,
-					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
-							chosenModule.angleKF),
-					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
+					new PIDFConfig(anglekP, anglekI, anglekD, anglekF),
+					new PIDFConfig(drivekP, drivekI, drivekD, drivekF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
@@ -217,9 +217,8 @@ public final class Constants {
 					angleOffset.getDegrees(),
 					wheelBase / 2,
 					-trackWidth / 2,
-					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
-							chosenModule.angleKF),
-					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
+					new PIDFConfig(anglekP, anglekI, anglekD, anglekF),
+					new PIDFConfig(drivekP, drivekI, drivekD, drivekF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
@@ -251,9 +250,8 @@ public final class Constants {
 					angleOffset.getDegrees(),
 					-wheelBase / 2,
 					trackWidth / 2,
-					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
-							chosenModule.angleKF),
-					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
+					new PIDFConfig(anglekP, anglekI, anglekD, anglekF),
+					new PIDFConfig(drivekP, drivekI, drivekD, drivekF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
@@ -285,9 +283,8 @@ public final class Constants {
 					angleOffset.getDegrees(),
 					-wheelBase / 2,
 					-trackWidth / 2,
-					new PIDFConfig(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD,
-							chosenModule.angleKF),
-					new PIDFConfig(driveKP, driveKI, driveKD, driveKF),
+					new PIDFConfig(anglekP, anglekI, anglekD, anglekF),
+					new PIDFConfig(drivekP, drivekI, drivekD, drivekF),
 					maxSpeed,
 					new SwerveModulePhysicalCharacteristics(
 							chosenModule.driveGearRatio,
