@@ -131,7 +131,7 @@ public final class Constants {
 		public static final double openLoopRamp = 0.25;
 		public static final double closedLoopRamp = 0.0;
 
-		/* Angle Motor PID Values */
+		/* Angle Motor PID Values */ //the decimal number is chosenModule.anglekP value, the sentences are explanation of constant
 		public static final double anglekP = 0.1; // 0.3  kP is for proportional amounts, so like the output is just a scaled value of the input, which is the error. So if error is 100 degrees, kP=0.3 will say to move the wheel 30% speed
 		public static final double anglekI = 0;   //0.0   kI is the little push, meaning if it is very close to the setpoint, than this value will determine how much of a push to give. The higher the value, if too high, it will oscilate, if too low, it will take forever to reach the setpoint
 		public static final double anglekD = 0;   //0.0   kD is the deciding factor for the rate of increasing the speed, so if kD is higher, the curve will flatten more, and the lower the effect, the more steep the curve.
@@ -143,6 +143,26 @@ public final class Constants {
 		public static final double drivekI = 0.0;
 		public static final double drivekD = 0.0;
 		public static final double drivekF = 0.0;
+
+    /* BroncBotz PIDF values */
+    /**
+     * {
+  "drive": {
+    "p": 0.0020645,
+    "i": 0,
+    "d": 0,
+    "f": 0,
+    "iz": 0
+  },
+  "angle": {
+    "p": 0.01,
+    "i": 0,
+    "d": 0,
+    "f": 0,
+    "iz": 0
+  }
+}
+    **/
 
 		/*
 		 * Drive Motor Characterization Values
