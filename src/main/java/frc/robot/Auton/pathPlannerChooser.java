@@ -61,9 +61,9 @@ public class pathPlannerChooser {
                     new PPSwerveControllerCommand(
                             pathPlannerTrajectory,
                             mSwerve::getPose,
-                            new PIDController(10, 0, 0),
-                            new PIDController(8, 0, 0),
-                            new PIDController(1, 0, 0),
+                            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+                            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                            new PIDController(Constants.AutoConstants.kPThetaController, 0, 0),
                             mSwerve::setChassisSpeeds,
                             mSwerve
                     ),
@@ -94,6 +94,10 @@ public class pathPlannerChooser {
     }
 
     public void closeObject() {
-        pathTrajectory.close();
+        if (pathTrajectory != null) {
+            pathTrajectory.close();
+        } else {
+            System.out.println("Path Trajectory is null");
+        }
     }
 }

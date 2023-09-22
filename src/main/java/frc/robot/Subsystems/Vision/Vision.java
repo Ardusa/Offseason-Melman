@@ -56,7 +56,7 @@ public class Vision extends SubsystemBase {
     }
 
     public Vision() {
-        startTab();
+        // startTab();
     }
 
     private void startTab() {

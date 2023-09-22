@@ -2,6 +2,7 @@ package frc.robot.Subsystems.CraneAssembly;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Lights;
 
@@ -27,6 +28,7 @@ public class Lighting extends SubsystemBase {
         blinkin = new Spark(Lights.blinkinPWM_ID);
         isCone = true;
         timer = new Timer();
+        SmartDashboard.putNumber("LightPWM", PWMVal);
     }
 
     public void setLights(double PWMVal) {

@@ -26,10 +26,10 @@ public final class CTREConfigs {
             Constants.Swerve.anglePeakCurrentLimit, 
             Constants.Swerve.anglePeakCurrentDuration);
 
-        swerveAngleFXConfig.slot0.kP = Constants.Swerve.angleKP;
-        swerveAngleFXConfig.slot0.kI = Constants.Swerve.angleKI;
-        swerveAngleFXConfig.slot0.kD = Constants.Swerve.angleKD;
-        swerveAngleFXConfig.slot0.kF = Constants.Swerve.angleKF;
+        swerveAngleFXConfig.slot0.kP = Constants.Swerve.anglekP;
+        swerveAngleFXConfig.slot0.kI = Constants.Swerve.anglekI;
+        swerveAngleFXConfig.slot0.kD = Constants.Swerve.anglekD;
+        swerveAngleFXConfig.slot0.kF = Constants.Swerve.anglekF;
         swerveAngleFXConfig.supplyCurrLimit = angleSupplyLimit;
 
         /* Swerve Drive Motor Configuration */
@@ -39,10 +39,10 @@ public final class CTREConfigs {
             Constants.Swerve.drivePeakCurrentLimit, 
             Constants.Swerve.drivePeakCurrentDuration);
 
-        swerveDriveFXConfig.slot0.kP = Constants.Swerve.driveKP;
-        swerveDriveFXConfig.slot0.kI = Constants.Swerve.driveKI;
-        swerveDriveFXConfig.slot0.kD = Constants.Swerve.driveKD;
-        swerveDriveFXConfig.slot0.kF = Constants.Swerve.driveKF;        
+        swerveDriveFXConfig.slot0.kP = Constants.Swerve.drivekP;
+        swerveDriveFXConfig.slot0.kI = Constants.Swerve.drivekI;
+        swerveDriveFXConfig.slot0.kD = Constants.Swerve.drivekD;
+        swerveDriveFXConfig.slot0.kF = Constants.Swerve.drivekF;        
         swerveDriveFXConfig.supplyCurrLimit = driveSupplyLimit;
         swerveDriveFXConfig.openloopRamp = Constants.Swerve.openLoopRamp;
         swerveDriveFXConfig.closedloopRamp = Constants.Swerve.closedLoopRamp;

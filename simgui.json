@@ -30,6 +30,7 @@
       "/LiveWindow/Ungrouped/Talon FX [31]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [40]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [41]": "Motor Controller",
+      "/Shuffleboard/Main Tab/Auton Chooser": "String Chooser",
       "/SmartDashboard/ArmCommand": "Subsystem",
       "/SmartDashboard/ArmMechanism/Actual": "Mechanism2d",
       "/SmartDashboard/ArmMechanism/Motor": "Mechanism2d",
@@ -86,6 +87,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "Retained Values": {
       "open": false
     },

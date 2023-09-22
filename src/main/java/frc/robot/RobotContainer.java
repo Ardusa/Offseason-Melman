@@ -13,7 +13,6 @@ import frc.robot.Commands.CraneCommands.Arm.ProfiledChangeSetPoint;
 import frc.robot.Commands.CraneCommands.Hand.SetGrip;
 import frc.robot.Commands.CraneCommands.Lights.LightCMD;
 import frc.robot.Commands.CraneCommands.Lights.LightReqCMD;
-import frc.robot.Commands.Swerve.AutoPilot;
 import frc.robot.Commands.Swerve.GetToPosition;
 import frc.robot.Commands.Swerve.balance;
 import frc.robot.Commands.Teleop.FineAdjust;
@@ -85,23 +84,33 @@ public class RobotContainer {
           }
         }));
 
-    new JoystickButton(xManip, XboxController.Button.kLeftBumper.value).whileTrue(new SetGrip());
+    new JoystickButton(xManip, XboxController.Button.kLeftBumper.value).whileTrue(
+            new SetGrip()).debounce(Constants.OperatorConstants.Debounce.kBumper);
+            
     new JoystickButton(xManip, XboxController.Button.kY.value).onTrue(
-        ProfiledChangeSetPoint.createWithTimeout(() -> mHand.holdingCone ? Constants.Arm.SetPoint.coneHighPosition
-            : Constants.Arm.SetPoint.cubeHighPosition));
+            ProfiledChangeSetPoint.createWithTimeout(() -> mHand.holdingCone
+                    ? Constants.Arm.SetPoint.coneHighPosition : Constants.Arm.SetPoint.cubeHighPosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(xManip, XboxController.Button.kB.value).onTrue(
-        ProfiledChangeSetPoint.createWithTimeout(() -> mHand.holdingCone ? Constants.Arm.SetPoint.coneMediumPosition
-            : Constants.Arm.SetPoint.cubeMediumPosition));
+            ProfiledChangeSetPoint.createWithTimeout(() -> mHand.holdingCone
+                    ? Constants.Arm.SetPoint.coneMediumPosition : Constants.Arm.SetPoint.cubeMediumPosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
+    
     new JoystickButton(xManip, XboxController.Button.kA.value)
-        .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.lowPosition));
+            .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.lowPosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(xManip, XboxController.Button.kX.value)
-        .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.generalIntakePosition));
+            .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.generalIntakePosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(xManip, XboxController.Button.kLeftStick.value)
-        .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.stowPosition));
+            .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.stowPosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(xManip, XboxController.Button.kRightStick.value)
-        .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.loadingZonePosition));
+            .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.loadingZonePosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(xManip, XboxController.Button.kBack.value)
-        .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.startPosition));
+            .onTrue(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.startPosition))
+            .debounce(Constants.OperatorConstants.Debounce.kButton);
 
     // Trigger leftTrigger = new JoystickButton(xManip,
     // XboxController.Axis.kLeftTrigger.value);
@@ -145,13 +154,18 @@ public class RobotContainer {
         new FineAdjust(
                 () -> keyboard.getRawAxis(3),
                 () -> keyboard.getRawAxis(4)
-        ));
+    ));
+        
+    new POVButton(keyboard, 90).onTrue(new LightReqCMD()).debounce(Constants.OperatorConstants.Debounce.kDPad);
+    new Trigger(() -> Lighting.timer.hasElapsed(Constants.Lights.blinkTime))
+        .onTrue(new InstantCommand(() -> new LightCMD(Lighting.PWMVal).schedule()));
 
     new JoystickButton(keyboard, 2).onTrue(new InstantCommand(() -> mSwerve.robotCentricSup = !mSwerve.robotCentricSup))
         .debounce(Constants.OperatorConstants.Debounce.kButton);
-    // new JoystickButton(keyboard, 3).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve))
-    new JoystickButton(keyboard, 3).onTrue(new AutoPilot().generatePath())
-        .debounce(Constants.OperatorConstants.Debounce.kButton);
+    // // new JoystickButton(keyboard, 3).onTrue(new InstantCommand(mSwerve::zeroGyro, mSwerve))
+
+    // new JoystickButton(keyboard, 3).onTrue(new AutoPilot().generatePath())
+        // .debounce(Constants.OperatorConstants.Debounce.kButton);
     new JoystickButton(keyboard, 4).onTrue(new InstantCommand(mSwerve::lock, mSwerve))
         .debounce(Constants.OperatorConstants.Debounce.kButton);
 

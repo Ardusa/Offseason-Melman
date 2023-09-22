@@ -114,7 +114,7 @@ public class Swerve extends SubsystemBase {
     }
 
     private void startTab() {
-        Constants.swerveLayout.add("Field", swerveDrive.field);
+        // Constants.swerveLayout.add("Field", swerveDrive.field);
         Constants.swerveLayout.addBoolean("AutoBalance", () -> (mInstance.getCurrentCommand().toString() == "Balance"));
     }
 
