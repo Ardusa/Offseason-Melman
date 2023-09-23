@@ -111,14 +111,13 @@ public class SwerveDrive {
     this.swerveModules = config.modules;
 
     //    odometry = new SwerveDriveOdometry(kinematics, getYaw(), getModulePositions());
-    swerveDrivePoseEstimator =
-        new SwervePoseEstimator2(
-            kinematics,
-            getYaw(),
-            getModulePositions(),
-            new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
-            stateStdDevs,
-            visionMeasurementStdDevs); // x,y,heading in radians; Vision measurement std dev,
+    swerveDrivePoseEstimator = new SwervePoseEstimator2(
+        kinematics,
+        getYaw(),
+        getModulePositions(),
+        new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+        stateStdDevs,
+        visionMeasurementStdDevs); // x,y,heading in radians; Vision measurement std dev,
     // higher=less weight
 
     zeroGyro();
@@ -132,24 +131,29 @@ public class SwerveDrive {
       SwerveDriveTelemetry.maxSpeed = swerveDriveConfiguration.maxSpeed;
       SwerveDriveTelemetry.maxAngularVelocity = swerveController.config.maxAngularVelocity;
       SwerveDriveTelemetry.moduleCount = swerveModules.length;
-      SwerveDriveTelemetry.sizeFrontBack =
-          Units.metersToInches(
-              SwerveMath.getSwerveModule(swerveModules, true, false).moduleLocation.getX()
-                  + SwerveMath.getSwerveModule(swerveModules, false, false).moduleLocation.getX());
-      SwerveDriveTelemetry.sizeLeftRight =
-          Units.metersToInches(
-              SwerveMath.getSwerveModule(swerveModules, false, true).moduleLocation.getY()
-                  + SwerveMath.getSwerveModule(swerveModules, false, false).moduleLocation.getY());
+      SwerveDriveTelemetry.sizeFrontBack = Units.metersToInches(
+          SwerveMath.getSwerveModule(swerveModules, true, false).moduleLocation.getX()
+              + SwerveMath.getSwerveModule(swerveModules, false, false).moduleLocation.getX());
+      SwerveDriveTelemetry.sizeLeftRight = Units.metersToInches(
+          SwerveMath.getSwerveModule(swerveModules, false, true).moduleLocation.getY()
+              + SwerveMath.getSwerveModule(swerveModules, false, false).moduleLocation.getY());
       SwerveDriveTelemetry.wheelLocations = new double[SwerveDriveTelemetry.moduleCount * 2];
       for (SwerveModule module : swerveModules) {
-        SwerveDriveTelemetry.wheelLocations[module.moduleNumber * 2] =
-            Units.metersToInches(module.configuration.moduleLocation.getX());
-        SwerveDriveTelemetry.wheelLocations[(module.moduleNumber * 2) + 1] =
-            Units.metersToInches(module.configuration.moduleLocation.getY());
+        SwerveDriveTelemetry.wheelLocations[module.moduleNumber * 2] = Units
+            .metersToInches(module.configuration.moduleLocation.getX());
+        SwerveDriveTelemetry.wheelLocations[(module.moduleNumber * 2) + 1] = Units
+            .metersToInches(module.configuration.moduleLocation.getY());
       }
       SwerveDriveTelemetry.measuredStates = new double[SwerveDriveTelemetry.moduleCount * 2];
       SwerveDriveTelemetry.desiredStates = new double[SwerveDriveTelemetry.moduleCount * 2];
     }
+  }
+  
+  public void delete() {
+    System.out.println("Module[0]: " + swerveDriveConfiguration.modules[0].configuration.angleOffset);
+    System.out.println("Module[1]: " + swerveDriveConfiguration.modules[1].configuration.angleOffset);
+    System.out.println("Module[2]: " + swerveDriveConfiguration.modules[2].configuration.angleOffset);
+    System.out.println("Module[3]: " + swerveDriveConfiguration.modules[3].configuration.angleOffset);
   }
 
   /**

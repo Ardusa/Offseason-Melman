@@ -132,14 +132,14 @@ public final class Constants {
 		public static final double closedLoopRamp = 0.0;
 
 		/* Angle Motor PID Values */ //the decimal number is chosenModule.anglekP value, the sentences are explanation of constant
-		public static final double anglekP = 0.4; // 0.3  kP is for proportional amounts, so like the output is just a scaled value of the input, which is the error. So if error is 100 degrees, kP=0.3 will say to move the wheel 30% speed
+		public static final double anglekP = 0.02; // 0.3  kP is for proportional amounts, so like the output is just a scaled value of the input, which is the error. So if error is 100 degrees, kP=0.3 will say to move the wheel 30% speed
 		public static final double anglekI = 0;   //0.0   kI is the little push, meaning if it is very close to the setpoint, than this value will determine how much of a push to give. The higher the value, if too high, it will oscilate, if too low, it will take forever to reach the setpoint
-		public static final double anglekD = 0;   //0.0   kD is the deciding factor for the rate of increasing the speed, so if kD is higher, the curve will flatten more, and the lower the effect, the more steep the curve.
-		public static final double anglekF = 0.01;   //0.0   idk what this means
+		public static final double anglekD = 01;   //0.0   kD is the deciding factor for the rate of increasing the speed, so if kD is higher, the curve will flatten more, and the lower the effect, the more steep the curve.
+		public static final double anglekF = 0;   //0.0   feedForward
     	public static final double anglekIZone = 0; //The zone that determines when the kI will start meaning something, must be large enough that the kP and kD can reach it, but must be small enough to not pick up unesscary values.
 
 		/* Drive Motor PID Values */
-		public static final double drivekP = 0.05;
+		public static final double drivekP = 0.0020645;
 		public static final double drivekI = 0.0;
 		public static final double drivekD = 0.0;
 		public static final double drivekF = 0.0;
@@ -192,7 +192,7 @@ public final class Constants {
 			public static final int driveMotorID = 21;
 			public static final int angleMotorID = 22;
 			public static final int canCoderID = 20;
-			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.40);
+			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(249.961);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
@@ -225,7 +225,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int canCoderID = 10;
-			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(9.492);
+			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(11.514);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
@@ -258,7 +258,7 @@ public final class Constants {
 			public static final int driveMotorID = 31;
 			public static final int angleMotorID = 32;
 			public static final int canCoderID = 30;
-			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(102.537);
+			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(188.438);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 
@@ -291,7 +291,7 @@ public final class Constants {
 			public static final int driveMotorID = 41;
 			public static final int angleMotorID = 42;
 			public static final int canCoderID = 40;
-			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(95.086);
+			public static final Rotation2d angleOffset = Rotation2d.fromDegrees(284.326);
 			public static final SwerveModuleConstants constants = new SwerveModuleConstants(
 					driveMotorID, angleMotorID, canCoderID, angleOffset);
 

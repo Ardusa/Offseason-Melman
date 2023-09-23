@@ -107,6 +107,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         swerveDrive.updateOdometry();
+        swerveDrive.delete();
     }
 
     @Override
