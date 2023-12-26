@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -66,17 +67,28 @@ public final class Constants {
 			Mod3.config
 		};
 
+
+		public static final int Pigeon2_ID = 3;
+		public static final SwerveIMU SwerveIMU = new Pigeon2Swerve(Pigeon2_ID);
+		public static final boolean invertedIMU = false;
+
+		public static final double kS = 0.0;
+		public static final double kV = 0.0;
+
+		// public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
+		// 	,
+		// 	invertGyro,
+		// 	null,
+		// 	null
+		// );
+
 		public static final SwerveDriveConfiguration SwerveConfig = new SwerveDriveConfiguration(
 			Constants.Swerve.swerveConfigs,
 			Constants.Swerve.SwerveIMU,
-			Constants.Swerve.maxSpeed,
-			Constants.Swerve.invertedIMU
+			Constants.Swerve.invertedIMU,
+			new SimpleMotorFeedforward(kS, kV),
+			new SwerveModulePhysicalCharacteristics(null, fieldWidth, fieldLength)
 		);
-
-		public static final int Pigeon2_ID = 3;
-
-		public static final SwerveIMU SwerveIMU = new Pigeon2Swerve(Pigeon2_ID);
-		public static final boolean invertedIMU = false; 
 
 		/* Module Gear Ratios */
 		public static final double driveGearRatio = chosenModule.driveGearRatio;
