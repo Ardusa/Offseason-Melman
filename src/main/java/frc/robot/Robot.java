@@ -4,113 +4,191 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.server.PathPlannerServer;
-
-import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Auton.chooser;
-import frc.robot.Auton.pathPlannerChooser;
-import frc.robot.Commands.Swerve.balance;
-import frc.robot.Custom.CTREConfigs;
-import frc.robot.Custom.LoggyThings.LoggyThingManager;
-import frc.robot.Subsystems.Drivetrain.Swerve;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.LoggyThings.LoggyThingManager;
+import frc.robot.Constants.Lights;
+import frc.robot.autos.autoFromPath;
+import frc.robot.autos.pathPlannerChooser;
+import frc.robot.commands.Lights.LightCMD;
+import frc.robot.subsystems.Swerve;
 
+/**
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
+ * project.
+ */
 public class Robot extends TimedRobot {
-    public chooser chooser;
+    public static CTREConfigs ctreConfigs;
     public pathPlannerChooser pathPlanner;
     private Command m_autonomousCommand;
     public SendableChooser<String> autonChooser;
-    public static CTREConfigs ctreConfigs;
+    public static SendableChooser<String> chooser;
 
+    /**
+     * This function is run when the robot is first started up and should be used
+     * for any
+     * initialization code.
+     */
     @Override
     public void robotInit() {
-        PathPlannerServer.startServer(Constants.softwareConstants.PathPlannerLibPort);
         ctreConfigs = new CTREConfigs();
         new RobotContainer();
 
+        chooser = new SendableChooser<String>();
+        chooser.setDefaultOption("Nothing", "Nothing");
+        chooser.addOption("BlueBalanceLeft", "BlueBalanceLeft.wpilib.json");
+        chooser.addOption("BlueBalanceRight", "BlueBalanceRight.wpilib.json");
+        chooser.addOption("BlueCenterBalance", "BlueCenterBalance.wpilib.json");
+        chooser.addOption("BlueCenterStay", "BlueCenterStay.wpilib.json");
+        chooser.addOption("BlueLeaveLeft", "BlueLeaveLeft.wpilib.json");
+        chooser.addOption("BlueLeaveRight", "BlueLeaveRight.wpilib.json");
+        chooser.addOption("BlueCenterLeftStraight", "BlueCenterLeftStraight.wpilib.json");
+        chooser.addOption("BlueCenterRightStraight", "BlueCenterRightStraight.wpilib.json");
+
+        chooser.addOption("RedBalanceLeft", "RedBalanceLeft.wpilib.json");
+        chooser.addOption("RedBalanceRight", "RedBalanceRight.wpilib.json");
+        chooser.addOption("RedCenterBalance", "RedCenterBalance.wpilib.json");
+        chooser.addOption("RedCenterStay", "RedCenterStay.wpilib.json");
+        chooser.addOption("RedLeaveLeft", "RedLeaveLeft.wpilib.json");
+        chooser.addOption("RedLeaveRight", "RedLeaveRight.wpilib.json");
+        chooser.addOption("RedCenterLeftStraight", "RedCenterLeftStraight.wpilib.json");
+        chooser.addOption("RedCenterRightStraight", "RedCenterRightStraight.wpilib.json");
+
+        chooser.addOption("DOUBLE AUTO", "tripleAuto");
+
+        SmartDashboard.putData("jefy", chooser);
+        SmartDashboard.putBoolean("isRed", false);
+
+        SmartDashboard.putBoolean("Open Side?", true);
+
         DriverStation.silenceJoystickConnectionWarning(true);
 
-        autonChooser = new SendableChooser<>();
-        autonChooser.setDefaultOption("Nothing", "null");
-        // autonChooser.addOption("Path 1", "Path1.json");
-        // autonChooser.addOption("Coop No Bump", "CoopertitionNoBump.json");
-        autonChooser.addOption("Place and Charge Path", "1pieceAndCharge");
-        SmartDashboard.putData("Autonomous Command", autonChooser);
+        // autonChooser = new SendableChooser<>();
+        // autonChooser.setDefaultOption("Nothing", "null");
+        // autonChooser.addOption("Place and Charge Path", "path1");
+        /* TODO: Add Auton Options, talk to @mwmcclure7 (Matthew) */
+        // SmartDashboard.putData("Autonomous Command", autonChooser);
 
-        CommandScheduler.getInstance().onCommandInitialize((Command c) -> {DataLogManager.log("INITIALIZED: " + c.getName());});
-        CommandScheduler.getInstance().onCommandFinish((Command c) -> {DataLogManager.log("FINISHED: " + c.getName());});
-        CommandScheduler.getInstance().onCommandInterrupt((Command c) -> {DataLogManager.log("INTERUPTED: " + c.getName());});
+        CommandScheduler.getInstance().onCommandInitialize((Command c) -> {
+            DataLogManager.log("INITIALIZED: " + c.getName());
+        });
+        CommandScheduler.getInstance().onCommandFinish((Command c) -> {
+            DataLogManager.log("FINISHED: " + c.getName());
+        });
+        CommandScheduler.getInstance().onCommandInterrupt((Command c) -> {
+            DataLogManager.log("INTERUPTED: " + c.getName());
+        });
     }
 
     @Override
     public void robotPeriodic() {
-        CommandScheduler.getInstance().run();
+        SmartDashboard.putString("path", chooser.getSelected());
         LoggyThingManager.getInstance().periodic();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+    }
 
     @Override
-    public void disabledPeriodic() {}
-
-    @Override
-    public void disabledExit() {}
+    public void disabledPeriodic() {
+    }
 
     @Override
     public void autonomousInit() {
-        // chooser = new chooser(autonChooser.getSelected());
-        // m_autonomousCommand = chooser.generateTrajectory();
+        new LightCMD(Lights.kRobostangs).schedule();
 
-        pathPlanner = new pathPlannerChooser(autonChooser.getSelected());
-        m_autonomousCommand = pathPlanner.generateTrajectory();
+        // m_autonomousCommand = new InstantCommand(() -> Arm.getInstance().resetLash())
+        //         .andThen(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.coneHighPosition))
+        //         .andThen(() -> new SetGrip())
+        //         .andThen(new WaitCommand(0.5))
+        //         .andThen(() -> new SetGrip())
+        //         .andThen(ProfiledChangeSetPoint.createWithTimeout(() -> Constants.Arm.SetPoint.stowPosition))
+        //         .andThen(new pathPlannerChooser(autonChooser.getSelected()).generateTrajectory());
 
+        m_autonomousCommand = new autoFromPath();
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
+    }
 
-        new Trigger(() -> pathPlanner.autonFinished).onTrue(new balance().repeatedly().until(() -> Math.abs(Swerve.getInstance().getPitchAngle()) <= 0.05));
+    @Override
+    public void autonomousExit() {
+        Swerve.getInstance().getField().getObject(Constants.AutoConstants.kFieldObjectName).close();
     }
 
     @Override
     public void autonomousPeriodic() {
-
     }
 
     @Override
-    public void autonomousExit() {}
-
-    @Override
     public void teleopInit() {
+        new LightCMD(Lights.kFireTwinkle).schedule();
+
+        /* Resets swerve odemetry to 180 degrees off rip */
+        new InstantCommand(() -> Swerve.getInstance().setGyro(180)).withName("Reset gyro 180°").schedule();
+        // new InstantCommand(() -> Swerve.getInstance()
+        //         .resetOdometry(new Pose2d(Swerve.getInstance().getPose().getTranslation(),
+        //                 Swerve.getInstance().getPose().getRotation().rotateBy(new Rotation2d(180)))))
+        //         .alongWith(new InstantCommand(() -> Swerve.getInstance().zeroGyro())).withName("Reset gyro 180° ").schedule();
+
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
     }
 
     @Override
-    public void teleopPeriodic() {}
-
-    @Override
-    public void teleopExit() {}
-
-    @Override
-    public void testInit() {
-        CommandScheduler.getInstance().cancelAll();
+    public void teleopPeriodic() {
     }
 
     @Override
-    public void testPeriodic() {}
+    public void testInit() {
+    }
 
     @Override
-    public void testExit() {}
+    public void testPeriodic() {
+    }
 
     @Override
-    public void simulationInit() {}
+    public void simulationInit() {
+        // final Joystick xDrive = new Joystick(3);
+        // final Swerve mSwerve = Swerve.getInstance();
+        // final Arm mArm = Arm.getInstance();
+        // final Hand mHand = Hand.getInstance();
+        // mSwerve.removeDefaultCommand();
+        // mArm.removeDefaultCommand();
+        // mHand.removeDefaultCommand();
+        // mSwerve.setDefaultCommand(
+        // new TeleopSwerve(
+        // () -> -xDrive.getRawAxis(1),
+        // () -> -xDrive.getRawAxis(0),
+        // () -> -xDrive.getRawAxis(2),
+        // () -> xDrive.getRawButton(0),
+        // () -> xDrive.getRawButton(1)
+        // )
+        // );
 
+        // mArm.setDefaultCommand(
+        // new PercentOutput(
+        // () -> Utils.customDeadzone(-xDrive.getRawAxis(3)),
+        // () -> Utils.customDeadzone(-xDrive.getRawAxis(4))
+        // )
+        // );
+    }
+
+    @Override
+    public void simulationPeriodic() {
+    }
 }

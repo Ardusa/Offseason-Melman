@@ -1,7 +1,7 @@
-package frc.robot.Commands.Lights;
+package frc.robot.commands.Lights;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Subsystems.Lighting;
+import frc.robot.subsystems.Lighting;;
 
 public class LightCMD extends InstantCommand {
     private final Lighting mLighting = Lighting.getInstance();
@@ -12,6 +12,9 @@ public class LightCMD extends InstantCommand {
         PWMVal = color;
         this.addRequirements(mLighting);
     }
+
+    @Override
+    public void initialize() {}
     
     @Override
     public void execute() {
